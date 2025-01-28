@@ -35,6 +35,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("중복된 이메일입니다.");
         }
 
+        if (!isValidEmail(request.getEmail())) {
+            throw new IllegalArgumentException("유효하지 않은 이메일 형식입니다."); // Invalid email format
+        }
+
         //비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -47,6 +51,12 @@ public class UserServiceImpl implements UserService {
         UserEntity saveUser = userRepository.save(userEntity);
 
         return new UserResponse(saveUser.getId(), saveUser.getUsername(), saveUser.getEmail());
+    }
+
+    @Transactional
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
     }
 
     @Transactional
