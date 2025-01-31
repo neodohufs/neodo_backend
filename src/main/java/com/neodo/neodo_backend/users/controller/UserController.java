@@ -42,10 +42,4 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response){
-        SecurityContextHolder.clearContext();
-        return ResponseEntity.ok("로그아웃 성공");
-    }
-
 }
