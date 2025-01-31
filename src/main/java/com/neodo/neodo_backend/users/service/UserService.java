@@ -7,6 +7,5 @@ import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import java.util.Optional;
 
 public interface UserService {
-    UserResponse signupUser(UserCreateRequest request);
-    Optional<UserEntity> findOne(Long userId);
+    UserResponse signup(UserCreateRequest request);
 }
