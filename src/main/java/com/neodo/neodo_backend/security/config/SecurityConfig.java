@@ -8,6 +8,7 @@ import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,12 +33,6 @@ public class SecurityConfig {
     private final CorsFilter corsFilter;
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring()
-                .requestMatchers("/api/login", "/api/users");
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
@@ -54,13 +49,8 @@ public class SecurityConfig {
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtTokenUtils);
         filter.setAuthenticationManager(authenticationManager()); // AuthenticationManager 설정
-        filter.setFilterProcessesUrl("/api/login"); // 커스텀 로그인 URL 설정
+        filter.setFilterProcessesUrl("/api/users/login"); // 커스텀 로그인 URL 설정
         return filter;
-    }
-
-    @Bean
-    public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(jwtTokenUtils, userDetailsServiceImpl);
     }
 
     @Bean
@@ -75,13 +65,14 @@ public class SecurityConfig {
 
                 // 요청 인증 설정
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .requestMatchers(HttpMethod.POST, "/api/users/signup").permitAll()  // 회원가입 허용 (POST /api/users)
+                        .requestMatchers("/api/users/login").permitAll()  // 로그인 허용
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
                 // 필터 순서 설정
                 .addFilterBefore(corsFilter, ChannelProcessingFilter.class) // CORS 필터
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(new JwtAuthorizationFilter(jwtTokenUtils, userDetailsServiceImpl), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

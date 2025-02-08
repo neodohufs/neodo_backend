@@ -1,5 +1,8 @@
 package com.neodo.neodo_backend.security.filter;
 
+import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
+import com.neodo.neodo_backend.exception.impl.AuthException;
+import com.neodo.neodo_backend.security.constant.Role;
 import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -29,12 +32,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        String method = request.getMethod();
+
+        // 인증이 필요 없는 URL 및 HTTP 메서드 설정
+        return "/api/users/signup".equals(requestURI) && "POST".equalsIgnoreCase(method);
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
         String accessToken = jwtTokenUtils.getAccessToken(request); // 헤더에서 AccessToken 가져오기
-
         try {
             if (StringUtils.hasText(accessToken)) {
                 if (jwtTokenUtils.validateToken(accessToken)) {
@@ -48,9 +58,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e) {
             log.warn("Access Token has expired: {}", e.getMessage());
+            throw new AuthException(ErrorResponseEnum.EXPIRED_TOKEN);
         } catch (Exception e) {
             log.error("Unexpected error during token validation: {}", e.getMessage());
             SecurityContextHolder.clearContext(); // 인증 정보 초기화
+            throw new AuthException(ErrorResponseEnum.UNEXPECTED_AUTH_ERROR);
         }
 
         filterChain.doFilter(request, response);
@@ -70,7 +82,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         log.info("인증 객체 생성 시작");
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         log.info("인증 객체 생성 성공");
-        return new UsernamePasswordAuthenticationToken(userDetails, "ROLE_USER", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, Role.ROLE_USER, userDetails.getAuthorities());
     }
 
     // accessToken이 유효하지 않은 경우 - 리프레시 토큰 검증 및 엑세스토큰 재발급
@@ -82,21 +94,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (refreshToken == null || refreshToken.isEmpty()) {
             log.warn("Refresh Token is missing or empty. Clearing security context.");
             SecurityContextHolder.clearContext();
-            return;
+            throw new AuthException(ErrorResponseEnum.TOKEN_NOT_FOUND);
         }
-
-        // refreshToken이 유효한 토큰인지 확인
         if (jwtTokenUtils.validateToken(refreshToken)) {
             log.info("유효한 refreshToken");
-            // accessToken 다시 생성, 헤더에 전달
-            String newAccessToken = jwtTokenUtils.createAccessToken(email);
+            String newAccessToken = jwtTokenUtils.createAccessToken(email); // accessToken 다시 생성, 헤더에 전달
             response.addHeader(AUTH_ACCESS_HEADER, newAccessToken);
             authenticateWithAccessToken(newAccessToken);
         } else {
             log.warn("유효하지 않은 Refresh Token: email={}", email);
             SecurityContextHolder.clearContext(); // 인증 정보 초기화
+            throw new AuthException(ErrorResponseEnum.INVALID_TOKEN);
         }
     }
 
-}
 
+}
