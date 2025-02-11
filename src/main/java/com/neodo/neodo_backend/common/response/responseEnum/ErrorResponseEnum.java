@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorResponseEnum implements Response {
-    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized User"),
+    // Response 유효성 검사
+    RESPONSE_NOT_VALID(HttpStatus.BAD_REQUEST, "Response Is Not Valid"),
 
     // auth
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized User"),
     AUTHENTICATION_IO_EXCEPTION(HttpStatus.BAD_REQUEST, "Client Send Bad Request"),
     TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "Refresh Token Cannot Be Found"),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Expired JWT Token. Login Again Is Needed."),
