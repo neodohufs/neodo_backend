@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum SuccessResponseEnum implements Response {
-    ;
+    // speech board
+    GET_SPEECH_BOARD_FEEDBACK(HttpStatus.OK, "Speech Board Feedback Is Loaded Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;
