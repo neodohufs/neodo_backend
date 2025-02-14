@@ -14,7 +14,7 @@ public class SpeechBoardFeedbackEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "speech_board_id")
     private SpeechBoardEntity speechBoardEntity;
 

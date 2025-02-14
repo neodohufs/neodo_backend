@@ -18,8 +18,8 @@ public class SpeechBoardFeedbackController {
 
     private final SpeechBoardFeedbackService speechBoardFeedbackService;
 
-    @GetMapping("/{speech_board_id}/feedback")
-    public ResponseEntity<CommonResponse<SpeechBoardFeedbackResponse>> getFeedback(@PathVariable("speech_board_id") Long speechBoardId) {
+    @GetMapping("/{speech-board-id}/feedback")
+    public ResponseEntity<CommonResponse<SpeechBoardFeedbackResponse>> getFeedback(@PathVariable("speech-board-id") Long speechBoardId) {
         SpeechBoardFeedbackResponse speechBoardFeedbackResponse = speechBoardFeedbackService.getFeedback(speechBoardId);
         return ResponseEntity.ok()
                 .body(CommonResponse.<SpeechBoardFeedbackResponse>builder()

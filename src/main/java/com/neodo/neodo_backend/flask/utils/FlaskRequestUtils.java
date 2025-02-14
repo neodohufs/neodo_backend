@@ -3,6 +3,8 @@ package com.neodo.neodo_backend.flask.utils;
 import com.neodo.neodo_backend.exception.impl.FlaskException;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
+import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
+import com.neodo.neodo_backend.speechCoachingFeedback.dto.request.SpeechCoachingFeedbackRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -32,6 +34,29 @@ public class FlaskRequestUtils {
                     HttpMethod.POST,
                     requestEntity,
                     SpeechBoardFeedbackResponse.class
+            );
+
+            if (responseEntity.getBody() == null) throw new FlaskException(RESPONSE_NOT_VALID);
+
+            return responseEntity.getBody();
+
+        } catch (Exception e) {
+            throw new FlaskException(EXTERNAL_SERVICE_ERROR);
+        }
+    }
+
+    public SpeechCoachingFeedbackResponse requestSpeechCoachingFeedback(SpeechCoachingFeedbackRequest speechCoachingFeedbackRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<SpeechCoachingFeedbackRequest> requestEntity = new HttpEntity<>(speechCoachingFeedbackRequest, headers);
+
+        try {
+            ResponseEntity<SpeechCoachingFeedbackResponse> responseEntity = restTemplate.exchange(
+                    flaskServerUrl,
+                    HttpMethod.POST,
+                    requestEntity,
+                    SpeechCoachingFeedbackResponse.class
             );
 
             if (responseEntity.getBody() == null) throw new FlaskException(RESPONSE_NOT_VALID);
