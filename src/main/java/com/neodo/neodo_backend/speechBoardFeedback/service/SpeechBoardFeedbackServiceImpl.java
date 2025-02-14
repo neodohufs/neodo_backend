@@ -10,6 +10,8 @@ import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedba
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import com.neodo.neodo_backend.speechBoardFeedback.infrastructure.entity.SpeechBoardFeedbackEntity;
 import com.neodo.neodo_backend.speechBoardFeedback.service.port.SpeechBoardFeedbackRepository;
+import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
+import com.neodo.neodo_backend.topic.service.port.TopicRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
 
     private final SpeechBoardRepository speechBoardRepository;
     private final SpeechBoardFeedbackRepository speechBoardFeedbackRepository;
+    private final TopicRepository topicRepository;
     private final FlaskRequestUtils flaskRequestUtils;
 
     @Override
@@ -39,6 +42,7 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
                 .build();
 
         SpeechBoardFeedbackResponse speechBoardFeedbackResponse = flaskRequestUtils.requestSpeechBoardFeedback(speechBoardFeedbackRequest);
+
         SpeechBoardFeedbackEntity speechBoardFeedbackEntity = SpeechBoardFeedbackEntity.builder()
                 .speechBoardEntity(speechBoardEntity)
                 .originalStt(speechBoardFeedbackResponse.getOriginalStt())
@@ -46,6 +50,14 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
                 .score(speechBoardFeedbackResponse.getScore())
                 .build();
         speechBoardFeedbackRepository.save(speechBoardFeedbackEntity);
+
+        for (String topic : speechBoardFeedbackResponse.getTopics()) {
+            TopicEntity topicEntity = TopicEntity.builder()
+                    .speechBoardEntity(speechBoardEntity)
+                    .topic(topic)
+                    .build();
+            topicRepository.save(topicEntity);
+        }
 
         return speechBoardFeedbackResponse;
     }

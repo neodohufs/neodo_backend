@@ -1,6 +1,6 @@
 package com.neodo.neodo_backend.speechCoaching.infrastructure.entity;
 
-import com.neodo.neodo_backend.topic.infrastructure.entity.Topic;
+import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public class SpeechCoachingEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "topic_id")
-    private Topic topic;
+    private TopicEntity topicEntity;
 
     private String record;
 
