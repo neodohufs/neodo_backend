@@ -1,5 +1,8 @@
 package com.neodo.neodo_backend.users.controller;
 
+import com.neodo.neodo_backend.common.response.CommonResponse;
+import com.neodo.neodo_backend.common.response.responseEnum.SuccessResponseEnum;
+import com.neodo.neodo_backend.security.service.UserDetailsImpl;
 import com.neodo.neodo_backend.users.dto.request.UserCreateRequest;
 import com.neodo.neodo_backend.users.dto.response.UserResponse;
 import com.neodo.neodo_backend.users.service.UserService;
@@ -38,9 +41,13 @@ public class UserController {
     }
 
     @GetMapping("/my-page")
-    public ResponseEntity<?> get(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CommonResponse<UserResponse>> get(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         UserResponse response = userService.get(userDetails.getUser());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                .body(CommonResponse.<UserResponse>builder()
+                        .response(SuccessResponseEnum.READ_USER_INFO)
+                        .data(response)
+                        .build());
     }
 
 
