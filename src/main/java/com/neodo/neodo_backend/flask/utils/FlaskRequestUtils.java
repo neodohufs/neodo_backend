@@ -30,7 +30,7 @@ public class FlaskRequestUtils {
 
         try {
             ResponseEntity<SpeechBoardFeedbackResponse> responseEntity = restTemplate.exchange(
-                    flaskServerUrl,
+                    flaskServerUrl + "/",
                     HttpMethod.POST,
                     requestEntity,
                     SpeechBoardFeedbackResponse.class
@@ -53,7 +53,7 @@ public class FlaskRequestUtils {
 
         try {
             ResponseEntity<SpeechCoachingFeedbackResponse> responseEntity = restTemplate.exchange(
-                    flaskServerUrl,
+                    flaskServerUrl + "/coach",
                     HttpMethod.POST,
                     requestEntity,
                     SpeechCoachingFeedbackResponse.class
