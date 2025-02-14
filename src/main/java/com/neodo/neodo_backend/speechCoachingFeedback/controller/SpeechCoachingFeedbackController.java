@@ -2,7 +2,6 @@ package com.neodo.neodo_backend.speechCoachingFeedback.controller;
 
 import com.neodo.neodo_backend.common.response.CommonResponse;
 import com.neodo.neodo_backend.common.response.responseEnum.SuccessResponseEnum;
-import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import com.neodo.neodo_backend.speechCoachingFeedback.controller.port.SpeechCoachingFeedbackService;
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
 import lombok.RequiredArgsConstructor;

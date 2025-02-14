@@ -3,9 +3,11 @@ package com.neodo.neodo_backend.speechCoachingFeedback.infrastructure.entity;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "speech_coaching_feedbacks")
+@NoArgsConstructor
 public class SpeechCoachingFeedbackEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
