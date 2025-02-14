@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum SuccessResponseEnum implements Response {
-    ;
+    RESOURCES_CREATED(HttpStatus.CREATED, "RESOURCES_CREATED");
 
     private final HttpStatus httpStatus;
     private final String message;
