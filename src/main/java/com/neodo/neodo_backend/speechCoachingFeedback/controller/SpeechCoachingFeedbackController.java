@@ -23,7 +23,7 @@ public class SpeechCoachingFeedbackController {
     public ResponseEntity<CommonResponse<SpeechCoachingFeedbackResponse>> getFeedback(@PathVariable("speech-coaching-id") Long speechCoachingId) {
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = speechCoachingFeedbackService.getFeedback(speechCoachingId);
         return ResponseEntity.ok()
-                .body(CommonResponse.<SpeechBoardFeedbackResponse>builder()
+                .body(CommonResponse.<SpeechCoachingFeedbackResponse>builder()
                         .response(SuccessResponseEnum.GET_SPEECH_COACHING_FEEDBACK)
                         .data(speechCoachingFeedbackResponse)
                         .build());
