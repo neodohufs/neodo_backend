@@ -4,6 +4,8 @@ import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "speech_coachings")
 @Getter
@@ -18,5 +20,8 @@ public class SpeechCoachingEntity {
     private String record;
 
     private String title;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
 }

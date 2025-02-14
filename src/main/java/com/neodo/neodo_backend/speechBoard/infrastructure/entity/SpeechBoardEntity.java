@@ -8,6 +8,8 @@ import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "speech_boards")
 @Getter
@@ -36,4 +38,7 @@ public class SpeechBoardEntity {
     private Audience audience;
 
     private Long deadline;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 }
