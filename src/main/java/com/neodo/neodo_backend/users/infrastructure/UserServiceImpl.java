@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
 
         return UserResponse.from(saveUser);
     }
+
+    @Override
+    public UserResponse get(UserEntity user) {
+        return UserResponse.from(user);
+    }
 }
