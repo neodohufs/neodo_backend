@@ -21,8 +21,8 @@ public enum ErrorResponseEnum implements Response {
     UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "Unsupported Token"),
 
     //duplicatedResources
-    DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated id"),
-    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated id");
+    DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
+    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email");
 
     private final HttpStatus httpStatus;
     private final String message;
