@@ -8,17 +8,17 @@ import lombok.Setter;
 @Setter
 public class UserResponse {
 
-    private Long id;
+    private Long userId;
     private String username;
     private String email;
 
-    private UserResponse(Long id, String username, String email) {
-        this.id = id;
+    private UserResponse(Long userId, String username, String email) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
     }
 
     public static UserResponse from(UserEntity user){
-        return new UserResponse(user.getId(), user.getUsername(), user.getEmail());
+        return new UserResponse(user.getUserId(), user.getUsername(), user.getEmail());
     }
 }
