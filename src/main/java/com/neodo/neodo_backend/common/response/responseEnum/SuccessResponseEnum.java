@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum SuccessResponseEnum implements Response {
+    READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
     RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully");
 
     private final HttpStatus httpStatus;
