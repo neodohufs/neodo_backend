@@ -12,8 +12,7 @@ import lombok.*;
 public class UserEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String username;

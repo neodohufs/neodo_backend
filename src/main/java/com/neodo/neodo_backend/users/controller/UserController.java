@@ -31,7 +31,7 @@ public class UserController {
 
         // 서비스 호출 로직
         UserResponse response = userService.signup(request);
-        URI location = URI.create("api/users/" + response.getUserId());
+        URI location = URI.create("api/users/" + response.getId());
         return ResponseEntity.created(location)
                 .body(CommonResponse.<UserResponse>builder()
                         .data(response)
