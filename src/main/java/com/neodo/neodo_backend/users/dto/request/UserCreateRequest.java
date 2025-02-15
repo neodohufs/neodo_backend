@@ -1,7 +1,6 @@
 package com.neodo.neodo_backend.users.dto.request;
 
 import com.neodo.neodo_backend.common.constant.ValidationMessage;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;

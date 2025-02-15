@@ -26,11 +26,11 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody UserCreateRequest request, BindingResult bindingResult) {
+    public ResponseEntity<?> signup(@Valid @RequestBody UserCreateRequest request) {
 
         // 서비스 호출 로직
         UserResponse response = userService.signup(request);
-        URI location = URI.create("api/users/" + response.getId());
+        URI location = URI.create("api/users/" + response.getUserId());
         return ResponseEntity.created(location)
                 .body(CommonResponse.<UserResponse>builder()
                         .data(response)
