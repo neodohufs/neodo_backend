@@ -24,6 +24,9 @@ public enum ErrorResponseEnum implements Response {
     DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
     DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email");
 
+    //AWS S3
+
+
     private final HttpStatus httpStatus;
     private final String message;
 }

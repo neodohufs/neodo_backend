@@ -17,3 +17,12 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+
+
+aws:
+  s3:
+    bucket: neodo-backend
+    access-key: ${ACCESS-KEY}
+    secret-key: ${SECRET-ACCESS-KEY}
+    region: ap-northeast-2
+
