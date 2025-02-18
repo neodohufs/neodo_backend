@@ -1,21 +1,20 @@
 package com.neodo.neodo_backend.users.controller;
 
+import com.neodo.neodo_backend.common.response.CommonResponse;
+import com.neodo.neodo_backend.common.response.responseEnum.SuccessResponseEnum;
+import com.neodo.neodo_backend.security.service.UserDetailsImpl;
+import com.neodo.neodo_backend.common.response.CommonResponse;
+import com.neodo.neodo_backend.common.response.responseEnum.SuccessResponseEnum;
 import com.neodo.neodo_backend.users.dto.request.UserCreateRequest;
 import com.neodo.neodo_backend.users.dto.response.UserResponse;
 import com.neodo.neodo_backend.users.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,18 +27,25 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody UserCreateRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errors.put(error.getField(), error.getDefaultMessage());
-            });
-            return ResponseEntity.badRequest().body(errors);
-        }
+    public ResponseEntity<?> signup(@Valid @RequestBody UserCreateRequest request) {
 
         // 서비스 호출 로직
         UserResponse response = userService.signup(request);
-        return ResponseEntity.ok(response);
+        URI location = URI.create("api/users/" + response.getId());
+        return ResponseEntity.created(location)
+                .body(CommonResponse.<UserResponse>builder()
+                        .data(response)
+                        .response(SuccessResponseEnum.RESOURCES_CREATED)
+                        .build());
     }
 
+    @GetMapping("/my-page")
+    public ResponseEntity<CommonResponse<UserResponse>> get(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        UserResponse response = userService.get(userDetails.getUser());
+        return ResponseEntity.ok()
+                .body(CommonResponse.<UserResponse>builder()
+                        .response(SuccessResponseEnum.READ_USER_INFO)
+                        .data(response)
+                        .build());
+    }
 }

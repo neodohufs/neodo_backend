@@ -1,5 +1,7 @@
 package com.neodo.neodo_backend.users.infrastructure;
 
+import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
+import com.neodo.neodo_backend.exception.impl.DuplicatedResources;
 import com.neodo.neodo_backend.users.dto.request.UserCreateRequest;
 import com.neodo.neodo_backend.users.dto.response.UserResponse;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
@@ -28,11 +30,11 @@ public class UserServiceImpl implements UserService {
 
         //유저 중복 확인
         if(userRepository.existsByUsername(request.getUsername())){
-            throw new IllegalArgumentException("중복된 사용자입니다.");
+            throw new DuplicatedResources(ErrorResponseEnum.DUPLICATED_USERNAME);
         }
         //이메일 중복 확인
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new IllegalArgumentException("중복된 이메일입니다.");
+            throw new DuplicatedResources(ErrorResponseEnum.DUPLICATED_EMAIL);
         }
 
         //비밀번호 암호화
@@ -47,5 +49,10 @@ public class UserServiceImpl implements UserService {
         UserEntity saveUser = userRepository.save(userEntity);
 
         return UserResponse.from(saveUser);
+    }
+
+    @Override
+    public UserResponse get(UserEntity user) {
+        return UserResponse.from(user);
     }
 }
