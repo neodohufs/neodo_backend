@@ -22,7 +22,16 @@ public enum ErrorResponseEnum implements Response {
 
     //duplicatedResources
     DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
-    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email");
+    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email"),
+
+
+
+
+    //speech coaching 관련 에러
+    SPEECH_COACHING_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Coaching Cannot Be Found"),
+    SPEECH_COACHING_FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Coaching Feedback Cannot Be Found"),
+    INVALID_SPEECH_COACHING_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Coaching ID");
+
 
     private final HttpStatus httpStatus;
     private final String message;
