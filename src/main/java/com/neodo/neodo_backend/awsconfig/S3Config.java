@@ -1,4 +1,4 @@
-package com.neodo.neodo_backend.speechboard.aws;
+package com.neodo.neodo_backend.awsconfig;
 
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -14,7 +14,7 @@ public class S3Config {
     @Value("${ACCESS-KEY}")
     private String accessKey;
 
-    @Value("${SECRET-ACCESS-KEY}")
+    @Value("${SECRET-KEY}")
     private String secretKey;
 
     @Value("ap-northeast-2")

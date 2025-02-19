@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-// 아마 CREATE TABLE recording ( id BIGINT AUTO_INCREMENT PRIMARY KEY, fileName VARCHAR(255), filePath VARCHAR(255) ); 와 동일한 느낌?
-@Entity  //이 클래스는 JPA의 Entity
-public class RecordingModel {
-    @Id  //Primary Key 지정, id 변수가 PK
+
+@Entity
+@Table(name = "speech_boards")
+public class SpeechBoardEntity {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //id 변수는 자동 증가하는 값을 가지게 됨, PK
     private Long speechboardId;
 
     @Column(name = "file_name")
-    private String fileName;
+    private String fileName;  // 난수 파일명 지정
 
     private String filePath;  // URL
 
@@ -28,14 +29,14 @@ public class RecordingModel {
 
     private Long id;
 
-    private String title;
+    private String title;  // 사용자 지정 제목
 
     private LocalDateTime uploadTime;
 
 
 
     //Constructor
-    public RecordingModel() {
+    public SpeechBoardEntity() {
     }
 
     //Getter

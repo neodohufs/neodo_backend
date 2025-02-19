@@ -2,7 +2,7 @@ package com.neodo.neodo_backend.speechboard.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.neodo.neodo_backend.speechboard.model.RecordingModel;
+import com.neodo.neodo_backend.speechboard.model.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechboard.repository.RecordingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ public class RecordingService {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public RecordingModel saveRecording(MultipartFile file, Long userId, String title, Integer atmosphere, Integer purpose, Integer scale, Integer audience, Integer limitTime) throws IOException {
+    public SpeechBoardEntity saveRecording(MultipartFile file, Long userId, String title, Integer atmosphere, Integer purpose, Integer scale, Integer audience, Integer limitTime) throws IOException {
         String fileName = UUID.randomUUID().toString() + ".m4a";
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
@@ -38,21 +38,21 @@ public class RecordingService {
             amazonS3Client.putObject(bucketName, fileName, inputStream, metadata);
         }
 
-        RecordingModel recordingModel = new RecordingModel();
-        recordingModel.setFileName(fileName);
-        recordingModel.setFilePath("https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/" + fileName);
-        recordingModel.setId(userId);
-        recordingModel.setTitle(title);
-        recordingModel.setUploadTime(LocalDateTime.now());
-        recordingModel.getAtmosphere(atmosphere);
-        recordingModel.setPurpose(purpose);
-        recordingModel.setScale(scale);
-        recordingModel.setAudience(audience);
-        recordingModel.setLimitTime(limitTime);
-        return recordingRepository.save(recordingModel);
+        SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity();
+        speechBoardEntity.setFileName(fileName);
+        speechBoardEntity.setFilePath("https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/" + fileName);
+        speechBoardEntity.setId(userId);
+        speechBoardEntity.setTitle(title);
+        speechBoardEntity.setUploadTime(LocalDateTime.now());
+        speechBoardEntity.getAtmosphere(atmosphere);
+        speechBoardEntity.setPurpose(purpose);
+        speechBoardEntity.setScale(scale);
+        speechBoardEntity.setAudience(audience);
+        speechBoardEntity.setLimitTime(limitTime);
+        return recordingRepository.save(speechBoardEntity);
     }
 
-    public RecordingModel findRecordingById(Long id) throws Exception {
+    public SpeechBoardEntity findRecordingById(Long id) throws Exception {
         return recordingRepository.findById(id).orElseThrow(() -> new Exception("Recording not found"));
     }
 
