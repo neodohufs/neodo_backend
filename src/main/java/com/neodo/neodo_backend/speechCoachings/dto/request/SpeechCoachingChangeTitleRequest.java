@@ -9,8 +9,4 @@ public class SpeechCoachingChangeTitleRequest {
 
     @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
     private String title;
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

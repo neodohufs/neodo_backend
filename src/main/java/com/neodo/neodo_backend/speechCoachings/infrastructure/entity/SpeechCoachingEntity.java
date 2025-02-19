@@ -1,14 +1,16 @@
 package com.neodo.neodo_backend.speechCoachings.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "speech_board")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,4 +33,8 @@ public class SpeechCoachingEntity {
     private String record;
 
     private Short category;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
