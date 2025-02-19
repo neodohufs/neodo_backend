@@ -26,11 +26,11 @@ public class RecordingController {
             @RequestParam Integer purpose,
             @RequestParam Integer scale,
             @RequestParam Integer audience,
-            @RequestParam Integer limitTime) throws IOException {
+            @RequestParam Integer deadline) throws IOException {
 
         String title = file.getOriginalFilename();
 
-        SpeechBoardEntity recording = recordingService.saveRecording(file, userId, title, atmosphere, purpose, scale, audience, limitTime);
+        SpeechBoardEntity recording = recordingService.saveRecording(file, userId, title, atmosphere, purpose, scale, audience, deadline);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.builder()
                         .response(SuccessResponseEnum.RESOURCES_CREATED)
