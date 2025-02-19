@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface SpeechCoachingRepository {
     Optional<SpeechCoachingEntity> findById(Long id);
-
+    SpeechCoachingEntity save(SpeechCoachingEntity speechCoachingEntity);
 }

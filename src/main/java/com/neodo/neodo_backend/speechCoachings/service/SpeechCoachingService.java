@@ -1,8 +1,8 @@
 package com.neodo.neodo_backend.speechCoachings.service;
 
 import com.neodo.neodo_backend.speechCoachings.dto.request.SpeechCoachingChangeTitleRequest;
+import com.neodo.neodo_backend.speechCoachings.dto.response.SpeechCoachingChangeTitleResponse;
 
 public interface SpeechCoachingService {
-
-    void speechCoachingChangeTitle(Long speechCoachingId, SpeechCoachingChangeTitleRequest request);
+    SpeechCoachingChangeTitleResponse speechCoachingChangeTitle(Long speechCoachingId, SpeechCoachingChangeTitleRequest request);
 }

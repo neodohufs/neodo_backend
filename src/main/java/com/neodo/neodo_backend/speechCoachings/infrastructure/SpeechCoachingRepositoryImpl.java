@@ -16,8 +16,13 @@ public class SpeechCoachingRepositoryImpl implements SpeechCoachingRepository {
     }
 
     @Override
-    public Optional<SpeechCoachingEntity> findById(Long id) {
-        return speechCoachingJpaRepository.findById(id);
+    public Optional<SpeechCoachingEntity> findById(Long SpeechCoachingId) {
+        return speechCoachingJpaRepository.findById(SpeechCoachingId);
+    }
+
+    @Override
+    public SpeechCoachingEntity save(SpeechCoachingEntity speechCoachingEntity){
+        return speechCoachingJpaRepository.save(speechCoachingEntity);
     }
 
 }
