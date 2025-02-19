@@ -28,6 +28,8 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
 
         speechBoardEntity.setTitle(request.getTitle()); //제목 업데이트
 
+        speechBoardRepository.save(speechBoardEntity);
+
         return SpeechBoardChangeTitleResponse.from(speechBoardEntity);
     }
 }
