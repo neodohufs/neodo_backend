@@ -3,6 +3,7 @@ package com.neodo.neodo_backend.speechCoachings.infrastructure;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.SpeechCoachingException;
 import com.neodo.neodo_backend.speechCoachings.dto.request.SpeechCoachingChangeTextRequest;
+import com.neodo.neodo_backend.speechCoachings.dto.response.SpeechCoachingChangeTextResponse;
 import com.neodo.neodo_backend.speechCoachings.infrastructure.entity.SpeechCoachingFeedbackEntity;
 import com.neodo.neodo_backend.speechCoachings.service.SpeechCoachingFeedbackRepository;
 import com.neodo.neodo_backend.speechCoachings.service.SpeechCoachingFeedbackService;
@@ -20,15 +21,16 @@ public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedback
 
     @Override
     @Transactional
-    public void speechCoachingChangeText(Long speechCoachingId, SpeechCoachingChangeTextRequest request){
-        if(request.getSpeechCoachingId() != null && !request.getSpeechCoachingId().equals(speechCoachingId)){
-            throw new SpeechCoachingException(ErrorResponseEnum.INVALID_SPEECH_COACHING_ID);
-        }
+    public SpeechCoachingChangeTextResponse speechCoachingChangeText(Long speechCoachingId, SpeechCoachingChangeTextRequest request){
 
         SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity = speechCoachingFeedbackRepository.findById(request.getSpeechCoachingFeedbackId())
                 .orElseThrow(()-> new SpeechCoachingException(ErrorResponseEnum.SPEECH_COACHING_FEEDBACK_NOT_FOUND));
 
         speechCoachingFeedbackEntity.setModifiedStt(request.getModified_stt());
+
+        speechCoachingFeedbackRepository.save(speechCoachingFeedbackEntity);
+
+        return SpeechCoachingChangeTextResponse.from(speechCoachingFeedbackEntity);
     }
 }
 

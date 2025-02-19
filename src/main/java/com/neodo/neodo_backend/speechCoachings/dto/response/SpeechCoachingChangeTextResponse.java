@@ -6,12 +6,12 @@ public class SpeechCoachingChangeTextResponse {
 
     private Long speechCoachingFeedbackId;
     private Long speechCoachingId;
-    private String title;
+    private String modified_stt;
 
-    public SpeechCoachingChangeTextResponse(Long speechCoachingFeedbackId, Long speechCoachingId, String title) {
+    public SpeechCoachingChangeTextResponse(Long speechCoachingFeedbackId, Long speechCoachingId, String modified_stt) {
         this.speechCoachingFeedbackId = speechCoachingFeedbackId;
         this.speechCoachingId = speechCoachingId;
-        this.title = title;
+        this.modified_stt = modified_stt;
     }
 
     public static SpeechCoachingChangeTextResponse from(SpeechCoachingFeedbackEntity speechCoachingFeedback){

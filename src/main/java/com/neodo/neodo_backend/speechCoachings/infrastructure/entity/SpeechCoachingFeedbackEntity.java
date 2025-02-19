@@ -6,7 +6,6 @@ import lombok.*;
 @Entity
 @Table(name = "speech_coaching_feedback")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,4 +29,8 @@ public class SpeechCoachingFeedbackEntity {
     private Short score;
 
     private String conclusion;
+
+    public void setModifiedStt(String modifiedStt) {
+        this.modifiedStt = modifiedStt;
+    }
 }
