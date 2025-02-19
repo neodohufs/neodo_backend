@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "speech_board")
+@Table(name = "speech_boards")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class SpeechBoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "speech_board_id")
-    private Long speechBoardId;
+    private Long id;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
