@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.neodo.neodo_backend.awsconfig.S3Config.S3_BUCKET_URL;
+
 @Service  //이 클래스는 Service 클래스
 public class RecordingService {
     @Autowired
@@ -29,8 +31,9 @@ public class RecordingService {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public SpeechBoardEntity saveRecording(MultipartFile file, Long userId, String title, Integer atmosphere, Integer purpose, Integer scale, Integer audience, Integer limitTime) throws IOException {
+    public SpeechBoardEntity saveRecording(MultipartFile file, Long userId, String title, Integer atmosphere, Integer purpose, Integer scale, Integer audience, Integer deadline) throws IOException {
         String fileName = UUID.randomUUID().toString() + ".m4a";
+        String record = S3_BUCKET_URL + fileName;  // URL 생성
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
 
@@ -38,17 +41,18 @@ public class RecordingService {
             amazonS3Client.putObject(bucketName, fileName, inputStream, metadata);
         }
 
-        SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity();
-        speechBoardEntity.setFileName(fileName);
-        speechBoardEntity.setRecord("https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/" + fileName);
-        speechBoardEntity.setUser_id(userId);
-        speechBoardEntity.setTitle(title);
-        speechBoardEntity.setCreated_at(LocalDateTime.now());
-        speechBoardEntity.getAtmosphere(atmosphere);
-        speechBoardEntity.setPurpose(purpose);
-        speechBoardEntity.setScale(scale);
-        speechBoardEntity.setAudience(audience);
-        speechBoardEntity.setDeadline(limitTime);
+        SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity(
+                        null,
+                userId,
+                title,
+                LocalDateTime.now(),
+                record,
+                atmosphere,
+                purpose,
+                scale,
+                audience,
+                deadline
+                );
         return recordingRepository.save(speechBoardEntity);
     }
 

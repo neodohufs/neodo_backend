@@ -28,4 +28,6 @@ public class S3Config {
                 .withCredentials(new AWSStaticCredentialsProvider(awsCreds))
                 .build();
     }
+
+    public static final String S3_BUCKET_URL = "https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/";
 }

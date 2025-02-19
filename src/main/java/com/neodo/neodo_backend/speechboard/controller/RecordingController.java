@@ -43,11 +43,10 @@ public class RecordingController {
         SpeechBoardEntity recording = recordingService.findRecordingById(speechboardId);
 
         return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + recording.getFileName() + "\"")
+                .header("Content-Disposition", "attachment; filename=\"" + recording.getTitle() + "\"")
                 .body(CommonResponse.builder()
                         .response(SuccessResponseEnum.READ_S3_URL_INFO)
                         .data(recording.getRecord())
                         .build());
     }
-
 }
