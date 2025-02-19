@@ -46,7 +46,7 @@ public class RecordingController {
                 .header("Content-Disposition", "attachment; filename=\"" + recording.getFileName() + "\"")
                 .body(CommonResponse.builder()
                         .response(SuccessResponseEnum.READ_S3_URL_INFO)
-                        .data(recording.getFilePath())
+                        .data(recording.getRecord())
                         .build());
     }
 

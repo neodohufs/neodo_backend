@@ -10,12 +10,18 @@ import java.time.LocalDateTime;
 public class SpeechBoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //id 변수는 자동 증가하는 값을 가지게 됨, PK
-    private Long speechboardId;
+    private Long speech_board_id;
+
+    private Long user_id;
+
+    private String title;  // 사용자 지정 제목
+
+    private LocalDateTime created_at;
 
     @Column(name = "file_name")
     private String fileName;  // 난수 파일명 지정
 
-    private String filePath;  // URL
+    private String record;  // URL
 
     private Integer atmosphere;
 
@@ -25,14 +31,7 @@ public class SpeechBoardEntity {
 
     private Integer audience;
 
-    private Integer limitTime;
-
-    private Long id;
-
-    private String title;  // 사용자 지정 제목
-
-    private LocalDateTime uploadTime;
-
+    private Integer deadline;
 
 
     //Constructor
@@ -40,23 +39,23 @@ public class SpeechBoardEntity {
     }
 
     //Getter
-    public Long getSpeechboardId() {
-        return speechboardId;
+    public Long getSpeech_board_id() {
+        return speech_board_id;
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getRecord() {
+        return record;
     }
 
-    public Long getId() { return id; }
+    public Long getUser_id() { return user_id; }
 
     public String getTitle() { return title; }
 
-    public LocalDateTime getUploadTime() { return uploadTime; }
+    public LocalDateTime getCreated_at() { return created_at; }
 
     public Integer getPurpose() {
         return purpose;
@@ -70,8 +69,8 @@ public class SpeechBoardEntity {
         return audience;
     }
 
-    public Integer getLimitTime() {
-        return limitTime;
+    public Integer getDeadline() {
+        return deadline;
     }
 
     public Integer getAtmosphere(Integer atmosphere) {
@@ -80,23 +79,23 @@ public class SpeechBoardEntity {
 
     //Setter
 
-    public void setSpeechboardId(Long id) {
-        this.speechboardId = id;
+    public void setSpeech_board_id(Long id) {
+        this.speech_board_id = id;
     }
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setRecord(String filePath) {
+        this.record = filePath;
     }
 
-    public void setId(Long userId) { this.id = userId; }
+    public void setUser_id(Long userId) { this.user_id = userId; }
 
     public void setTitle(String title) { this.title = title; }
 
-    public void setUploadTime(LocalDateTime uploadTime) { this.uploadTime = uploadTime; }
+    public void setCreated_at(LocalDateTime uploadTime) { this.created_at = uploadTime; }
 
     public void setPurpose(Integer purpose) {
         this.purpose = purpose;
@@ -110,8 +109,8 @@ public class SpeechBoardEntity {
         this.audience = audience;
     }
 
-    public void setLimitTime(Integer limitTime) {
-        this.limitTime = limitTime;
+    public void setDeadline(Integer limitTime) {
+        this.deadline = limitTime;
     }
 
     public void setAtmosphere(Integer atmosphere) {

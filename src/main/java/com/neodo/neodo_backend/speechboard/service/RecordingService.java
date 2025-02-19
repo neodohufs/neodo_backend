@@ -40,15 +40,15 @@ public class RecordingService {
 
         SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity();
         speechBoardEntity.setFileName(fileName);
-        speechBoardEntity.setFilePath("https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/" + fileName);
-        speechBoardEntity.setId(userId);
+        speechBoardEntity.setRecord("https://neodo-backends3bucket.s3.ap-northeast-2.amazonaws.com/" + fileName);
+        speechBoardEntity.setUser_id(userId);
         speechBoardEntity.setTitle(title);
-        speechBoardEntity.setUploadTime(LocalDateTime.now());
+        speechBoardEntity.setCreated_at(LocalDateTime.now());
         speechBoardEntity.getAtmosphere(atmosphere);
         speechBoardEntity.setPurpose(purpose);
         speechBoardEntity.setScale(scale);
         speechBoardEntity.setAudience(audience);
-        speechBoardEntity.setLimitTime(limitTime);
+        speechBoardEntity.setDeadline(limitTime);
         return recordingRepository.save(speechBoardEntity);
     }
 
