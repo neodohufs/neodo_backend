@@ -39,4 +39,8 @@ public class SpeechBoardEntity {
     private Short audience;
 
     private Short deadline;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
