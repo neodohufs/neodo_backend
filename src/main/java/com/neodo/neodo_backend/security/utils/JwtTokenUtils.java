@@ -36,6 +36,7 @@ public class JwtTokenUtils {
         return BEARER_PREFIX + Jwts.builder()
                 .setSubject(email)
                 .claim(AUTHORIZATION_KEY, Role.ROLE_USER.name())
+                .setIssuedAt(new Date(now)) //발급 시간 추가
                 .setExpiration(new Date(now + ACCESS_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -47,6 +48,7 @@ public class JwtTokenUtils {
 
         return Jwts.builder()
                 .setSubject(email)
+                .setIssuedAt(new Date(now))
                 .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

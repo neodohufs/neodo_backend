@@ -5,6 +5,7 @@ import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.AuthException;
 import com.neodo.neodo_backend.security.constant.Role;
 import com.neodo.neodo_backend.security.dto.LoginRequest;
+import com.neodo.neodo_backend.security.service.LogoutServiceImpl;
 import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import static com.neodo.neodo_backend.security.constant.JwtTokenConstant.*;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtTokenUtils jwtTokenUtils;
+    private final LogoutServiceImpl logoutServiceImpl;
 
     @Override
     public Authentication attemptAuthentication(
@@ -62,6 +64,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String email = authentication.getName();
         String accessToken = jwtTokenUtils.createAccessToken(email);
         String refreshToken = jwtTokenUtils.createRefreshToken(email);
+
+        //로그아웃 정보 초기화
+        logoutServiceImpl.resetUserLogoutInfo(email);
 
         // Access Token을 응답 헤더에 추가
         response.addHeader(AUTH_ACCESS_HEADER, accessToken);
