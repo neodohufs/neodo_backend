@@ -18,4 +18,9 @@ public class SpeechBoardFeedbackRepositoryImpl implements SpeechBoardFeedbackRep
     public Optional<SpeechBoardFeedbackEntity> findById(Long speechBoardFeedbackId) {
         return speechBoardFeedbackJpaRepository.findById(speechBoardFeedbackId);
     }
+
+    @Override
+    public SpeechBoardFeedbackEntity save(SpeechBoardFeedbackEntity speechBoardFeedbackEntity){
+        return speechBoardFeedbackJpaRepository.save(speechBoardFeedbackEntity);
+    }
 }

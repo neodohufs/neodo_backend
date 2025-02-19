@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "speech_board_feedback")
+@Table(name = "speech_board_feedbacks")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,4 +29,8 @@ public class SpeechBoardFeedbackEntity {
     private Short score;
 
     private String conclusion;
+
+    public void setModifiedStt(String modifiedStt) {
+        this.modifiedStt = modifiedStt;
+    }
 }

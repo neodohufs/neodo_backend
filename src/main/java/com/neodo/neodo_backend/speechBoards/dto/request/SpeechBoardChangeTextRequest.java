@@ -13,8 +13,5 @@ public class SpeechBoardChangeTextRequest {
     private Long speechBoardFeedbackId;
 
     @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
-    private Long speechBoardId;
-
-    @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
     private String modified_stt;
 }

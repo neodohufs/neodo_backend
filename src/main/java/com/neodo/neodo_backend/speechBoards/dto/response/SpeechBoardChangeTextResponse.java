@@ -1,8 +1,6 @@
 package com.neodo.neodo_backend.speechBoards.dto.response;
 
-import com.neodo.neodo_backend.speechBoards.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoards.infrastructure.entity.SpeechBoardFeedbackEntity;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
