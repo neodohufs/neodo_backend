@@ -1,10 +1,10 @@
 package com.neodo.neodo_backend.speechBoard.dto.response;
 
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Formality;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Atmosphere;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Audience;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.SpeechType;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.AudienceSize;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Purpose;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Scale;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -19,13 +19,13 @@ public class RecordResponseDto {
 
     private LocalDateTime createdAt;
 
-    private Formality formality;
+    private Atmosphere atmosphere;
 
-    private SpeechType speechType;
+    private Purpose purpose;
 
-    private AudienceSize audienceSize;
+    private Scale scale;
 
-    private Audience audienceLevel;
+    private Audience audience;
 
     private Long deadline;
 
@@ -34,10 +34,10 @@ public class RecordResponseDto {
         this.user_id = speechBoardEntity.getUser().getId();
         this.title = speechBoardEntity.getTitle();
         this.createdAt = speechBoardEntity.getCreatedAt();
-        this.formality = speechBoardEntity.getFormality();
-        this.speechType = speechBoardEntity.getSpeechType();
-        this.audienceSize = speechBoardEntity.getAudienceSize();
-        this.audienceLevel = speechBoardEntity.getAudienceLevel();
+        this.atmosphere = speechBoardEntity.getAtmosphere();
+        this.purpose = speechBoardEntity.getPurpose();
+        this.scale = speechBoardEntity.getScale();
+        this.audience = speechBoardEntity.getAudience();
         this.deadline = speechBoardEntity.getDeadline();
     }
 }

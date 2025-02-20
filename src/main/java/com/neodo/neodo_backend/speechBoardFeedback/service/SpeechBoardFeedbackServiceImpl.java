@@ -34,10 +34,10 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
 
         SpeechBoardFeedbackRequest speechBoardFeedbackRequest = SpeechBoardFeedbackRequest.builder()
                 .record(speechBoardEntity.getRecord())
-                .formality(speechBoardEntity.getFormality())
-                .audienceLevel(speechBoardEntity.getAudienceLevel())
-                .scale(speechBoardEntity.getAudienceSize())
-                .purpose(speechBoardEntity.getSpeechType())
+                .atmosphere(speechBoardEntity.getAtmosphere())
+                .audience(speechBoardEntity.getAudience())
+                .scale(speechBoardEntity.getScale())
+                .purpose(speechBoardEntity.getPurpose())
                 .deadline(speechBoardEntity.getDeadline())
                 .build();
 
