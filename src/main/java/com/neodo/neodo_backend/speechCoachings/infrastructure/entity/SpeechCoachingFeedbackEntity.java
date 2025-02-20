@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "speech_coaching_feedback")
+@Table(name = "speech_coaching_feedbacks")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
