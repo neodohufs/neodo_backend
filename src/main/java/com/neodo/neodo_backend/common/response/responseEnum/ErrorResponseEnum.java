@@ -12,8 +12,8 @@ public enum ErrorResponseEnum implements Response {
     RESPONSE_NOT_VALID(HttpStatus.BAD_REQUEST, "Response Is Not Valid"),
     RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource Cannot Be Found"),
 
-    // flask
-    EXTERNAL_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Flask Internal Server Error"),
+    // flask, S3
+    EXTERNAL_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server of External Service Error"),
 
     // auth
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized User"),

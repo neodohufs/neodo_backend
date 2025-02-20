@@ -1,6 +1,6 @@
 package com.neodo.neodo_backend.flask.utils;
 
-import com.neodo.neodo_backend.exception.impl.FlaskException;
+import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
@@ -30,18 +30,18 @@ public class FlaskRequestUtils {
 
         try {
             ResponseEntity<SpeechBoardFeedbackResponse> responseEntity = restTemplate.exchange(
-                    flaskServerUrl + "/",
+                    flaskServerUrl,
                     HttpMethod.POST,
                     requestEntity,
                     SpeechBoardFeedbackResponse.class
             );
 
-            if (responseEntity.getBody() == null) throw new FlaskException(RESPONSE_NOT_VALID);
+            if (responseEntity.getBody() == null) throw new ExternalServiceException(RESPONSE_NOT_VALID);
 
             return responseEntity.getBody();
 
         } catch (Exception e) {
-            throw new FlaskException(EXTERNAL_SERVICE_ERROR);
+            throw new ExternalServiceException(EXTERNAL_SERVICE_ERROR);
         }
     }
 
@@ -53,18 +53,18 @@ public class FlaskRequestUtils {
 
         try {
             ResponseEntity<SpeechCoachingFeedbackResponse> responseEntity = restTemplate.exchange(
-                    flaskServerUrl + "/coach",
+                    flaskServerUrl + "coach",
                     HttpMethod.POST,
                     requestEntity,
                     SpeechCoachingFeedbackResponse.class
             );
 
-            if (responseEntity.getBody() == null) throw new FlaskException(RESPONSE_NOT_VALID);
+            if (responseEntity.getBody() == null) throw new ExternalServiceException(RESPONSE_NOT_VALID);
 
             return responseEntity.getBody();
 
         } catch (Exception e) {
-            throw new FlaskException(EXTERNAL_SERVICE_ERROR);
+            throw new ExternalServiceException(EXTERNAL_SERVICE_ERROR);
         }
     }
 }
