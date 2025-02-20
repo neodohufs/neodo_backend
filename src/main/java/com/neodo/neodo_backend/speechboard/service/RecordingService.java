@@ -2,6 +2,8 @@ package com.neodo.neodo_backend.speechboard.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
+import com.neodo.neodo_backend.exception.impl.AuthException;
 import com.neodo.neodo_backend.speechboard.dto.RequestDTO;
 import com.neodo.neodo_backend.speechboard.model.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechboard.repository.RecordingRepository;
@@ -58,7 +60,7 @@ public class RecordingService {
         return recordingRepository.save(speechBoardEntity);
     }
 
-    public SpeechBoardEntity findRecordingById(Long id) throws Exception {
-        return recordingRepository.findById(id).orElseThrow(() -> new Exception("Recording not found"));
+    public SpeechBoardEntity findRecordingById(Long id) {
+        return recordingRepository.findById(id).orElseThrow(() -> new AuthException(ErrorResponseEnum.RECORDING_NOT_FOUND));
     }
 }

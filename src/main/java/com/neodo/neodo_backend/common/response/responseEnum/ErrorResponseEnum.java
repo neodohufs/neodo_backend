@@ -22,10 +22,11 @@ public enum ErrorResponseEnum implements Response {
 
     //duplicatedResources
     DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
-    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email");
+    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email"),
 
-    //AWS S3
+    //Speechboard Recording
 
+    RECORDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Recording File Cannot Be Found");
 
     private final HttpStatus httpStatus;
     private final String message;
