@@ -16,12 +16,18 @@ public class SpeechCoachingFeedbackEntity {
     @JoinColumn(name = "speech_coaching_id")
     private SpeechCoachingEntity speechcoachingEntity;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String originalStt;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String modifiedStt;
 
     private int score;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String conclusion;
 
     @Builder

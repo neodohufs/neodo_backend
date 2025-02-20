@@ -18,12 +18,18 @@ public class SpeechBoardFeedbackEntity {
     @JoinColumn(name = "speech_board_id")
     private SpeechBoardEntity speechBoardEntity;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String originalStt;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String modifiedStt;
 
     private int score;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String conclusion;
 
     @Builder
