@@ -3,9 +3,8 @@ package com.neodo.neodo_backend.security.filter;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.AuthException;
 import com.neodo.neodo_backend.security.constant.Role;
-import com.neodo.neodo_backend.security.service.LogoutServiceImpl;
+import com.neodo.neodo_backend.security.service.LogoutService;
 import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
-import com.neodo.neodo_backend.security.utils.TokenBlacklist;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -33,8 +32,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtils jwtTokenUtils;
     private final UserDetailsService userDetailsService;
-    private final LogoutServiceImpl logoutServiceImpl;
-    private final TokenBlacklist tokenBlacklist;
+    private final LogoutService logoutService;
+    //private final TokenBlacklist tokenBlacklist;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -54,11 +53,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String accessToken = jwtTokenUtils.getAccessToken(request); // 헤더에서 AccessToken 가져오기
 
             if (StringUtils.hasText(accessToken)) {
-                // 블랙리스트 확인
-                if (tokenBlacklist.isTokenBlacklisted(accessToken)) {
-                    log.warn("블랙리스트에 등록된 accessToken");
-                    throw new AuthException(ErrorResponseEnum.INVALID_TOKEN);
-                }
 
                 Claims claims = jwtTokenUtils.parseClaims(accessToken);
                 String email = claims.getSubject();
@@ -72,11 +66,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Long tokenIat = claims.getIssuedAt().getTime();
 
                 // 최소 유효 발급 시간 확인 (로그아웃 시간 이후 발급된 토큰인지 검증)
-                Long logoutTimestamp = logoutServiceImpl.getUserLogoutTimestamp(email);
+                Long logoutTimestamp = logoutService.getUserLogoutTimestamp(email);
                 if (logoutTimestamp != null && tokenIat < logoutTimestamp) {
                     log.warn("로그아웃된 accessToken");
                     throw new AuthException(ErrorResponseEnum.INVALID_TOKEN);
                 }
+
 
                 if (jwtTokenUtils.validateToken(accessToken)) {
                     log.info("유효한 accessToken");

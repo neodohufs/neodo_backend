@@ -1,6 +1,6 @@
 package com.neodo.neodo_backend.security.controller;
 
-import com.neodo.neodo_backend.security.service.LogoutServiceImpl;
+import com.neodo.neodo_backend.security.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LogoutController {
 
-    private final LogoutServiceImpl logoutServiceImpl;
+    private final LogoutService logoutService;
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        logoutServiceImpl.logout(request, response);
+        logoutService.logout(request, response);
     }
 }
