@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import static com.neodo.neodo_backend.awsconfig.S3Config.S3_BUCKET_URL;
+import static com.neodo.neodo_backend.aws.config.S3Config.S3_BUCKET_URL;
 
 @Service
 public class SpeechBoardServiceImpl implements SpeechBoardService {
