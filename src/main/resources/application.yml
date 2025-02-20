@@ -21,7 +21,7 @@ jwt:
 
 aws:
   s3:
-    bucket: neodo-backend
+    bucket: neodo-backends3bucket
     access-key: ${ACCESS-KEY}
     secret-key: ${SECRET-KEY}
     region: ap-northeast-2

@@ -2,6 +2,7 @@ package com.neodo.neodo_backend.speechboard.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.neodo.neodo_backend.speechboard.dto.RequestDTO;
 import com.neodo.neodo_backend.speechboard.model.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechboard.repository.RecordingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,24 @@ import java.util.UUID;
 
 import static com.neodo.neodo_backend.awsconfig.S3Config.S3_BUCKET_URL;
 
-@Service  //이 클래스는 Service 클래스
+@Service
 public class RecordingService {
-    @Autowired
-    private RecordingRepository recordingRepository;
 
-    @Autowired
+    private final RecordingRepository recordingRepository;
     private final AmazonS3Client amazonS3Client;
 
     @Value("neodo-backends3bucket")
     private String bucketName;
 
-    public RecordingService(AmazonS3Client amazonS3Client) {
+    @Autowired
+    public RecordingService(RecordingRepository recordingRepository, AmazonS3Client amazonS3Client) {
+        this.recordingRepository = recordingRepository;
         this.amazonS3Client = amazonS3Client;
     }
 
-    public SpeechBoardEntity saveRecording(MultipartFile file, Long userId, String title, Integer atmosphere, Integer purpose, Integer scale, Integer audience, Integer deadline) throws IOException {
-        String fileName = UUID.randomUUID().toString() + ".m4a";
+    public SpeechBoardEntity saveRecording(RequestDTO request) throws IOException {
+        MultipartFile file = request.getFile();
+        String fileName = UUID.randomUUID() + ".m4a";
         String record = S3_BUCKET_URL + fileName;  // URL 생성
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
@@ -42,22 +44,21 @@ public class RecordingService {
         }
 
         SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity(
-                        null,
-                userId,
-                title,
+                null,
+                request.getUserId(),
+                file.getOriginalFilename(),
                 LocalDateTime.now(),
                 record,
-                atmosphere,
-                purpose,
-                scale,
-                audience,
-                deadline
-                );
+                request.getAtmosphere(),
+                request.getPurpose(),
+                request.getScale(),
+                request.getAudience(),
+                request.getDeadline()
+        );
         return recordingRepository.save(speechBoardEntity);
     }
 
     public SpeechBoardEntity findRecordingById(Long id) throws Exception {
         return recordingRepository.findById(id).orElseThrow(() -> new Exception("Recording not found"));
     }
-
 }
