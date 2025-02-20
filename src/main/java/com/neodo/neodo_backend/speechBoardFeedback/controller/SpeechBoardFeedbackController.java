@@ -6,10 +6,7 @@ import com.neodo.neodo_backend.speechBoardFeedback.controller.port.SpeechBoardFe
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +15,7 @@ public class SpeechBoardFeedbackController {
 
     private final SpeechBoardFeedbackService speechBoardFeedbackService;
 
-    @GetMapping("/{speech-board-id}/feedback")
+    @PostMapping("/{speech-board-id}/feedback")
     public ResponseEntity<CommonResponse<SpeechBoardFeedbackResponse>> getFeedback(@PathVariable("speech-board-id") Long speechBoardId) {
         SpeechBoardFeedbackResponse speechBoardFeedbackResponse = speechBoardFeedbackService.getFeedback(speechBoardId);
         return ResponseEntity.ok()

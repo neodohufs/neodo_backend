@@ -6,10 +6,7 @@ import com.neodo.neodo_backend.speechCoachingFeedback.controller.port.SpeechCoac
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +15,7 @@ public class SpeechCoachingFeedbackController {
 
     private final SpeechCoachingFeedbackService speechCoachingFeedbackService;
 
-    @GetMapping("/{speech-coaching-id}/feedback")
+    @PostMapping("/{speech-coaching-id}/feedback")
     public ResponseEntity<CommonResponse<SpeechCoachingFeedbackResponse>> getFeedback(@PathVariable("speech-coaching-id") Long speechCoachingId) {
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = speechCoachingFeedbackService.getFeedback(speechCoachingId);
         return ResponseEntity.ok()
