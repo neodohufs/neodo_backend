@@ -32,8 +32,7 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final LogoutService logoutService;
     private final CorsFilter corsFilter;
-    private final TokenBlacklist tokenBlacklist;
-
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
