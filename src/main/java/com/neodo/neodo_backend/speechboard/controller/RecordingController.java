@@ -6,6 +6,7 @@ import com.neodo.neodo_backend.speechboard.dto.RequestDTO;
 import com.neodo.neodo_backend.speechboard.dto.ResponseDTO;
 import com.neodo.neodo_backend.speechboard.model.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechboard.service.RecordingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/speech-boards")
+@Slf4j
 public class RecordingController {
 
     private final RecordingService recordingService;
@@ -26,8 +28,8 @@ public class RecordingController {
     }
 
     @PostMapping("/recordings")
-    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestBody RequestDTO request, @RequestParam("record") MultipartFile file) throws IOException {
-
+    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestPart("request") RequestDTO request, @RequestPart("record") MultipartFile file) throws IOException {
+        log.info("들어오는지 확인");
         ResponseDTO responseDTO = recordingService.saveRecording(request, file);
 
         return ResponseEntity.status(HttpStatus.CREATED)
