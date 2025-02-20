@@ -1,8 +1,8 @@
 package com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums;
 
-public enum Purpose {
-    INFORMATION,
-    REPORT,
-    PERSUASION,
+public enum SpeechType {
+    INFORMATIVE,
+    REPORTING,
+    PERSUASIVE,
     DEBATE;
 }

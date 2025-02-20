@@ -1,10 +1,10 @@
 package com.neodo.neodo_backend.speechBoard.infrastructure.entity;
 
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Atmosphere;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Formality;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Audience;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Purpose;
-import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Scale;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.SpeechType;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.AudienceSize;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -30,18 +30,18 @@ public class SpeechBoardEntity {
     private String record;
 
     @Enumerated(EnumType.STRING)
-    private Atmosphere atmosphere;
+    private Formality formality;
 
     @Enumerated(EnumType.STRING)
-    private Purpose purpose;
+    private SpeechType speechType;
 
     @Enumerated(EnumType.STRING)
-    private Scale scale;
+    private AudienceSize audienceSize;
 
     @Enumerated(EnumType.STRING)
-    private Audience audience;
+    private Audience audienceLevel;
 
-    private Long deadline;
+    private Long TimeLimit;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
@@ -52,10 +52,10 @@ public class SpeechBoardEntity {
         this.title = fileName;
         this.createdAt = LocalDateTime.now();
         this.record = record;
-        this.atmosphere = recordRequestDto.getAtmosphere();
-        this.purpose = recordRequestDto.getPurpose();
-        this.scale = recordRequestDto.getScale();
-        this.audience = recordRequestDto.getAudience();
+        this.formality = recordRequestDto.getFormality();
+        this.speechType = recordRequestDto.getSpeechType();
+        this.audienceSize = recordRequestDto.getAudienceSize();
+        this.audienceLevel = recordRequestDto.getAudienceLevel();
         this.deadline = recordRequestDto.getDeadline();
     }
 
