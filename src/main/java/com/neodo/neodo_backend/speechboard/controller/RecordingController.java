@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -25,9 +26,9 @@ public class RecordingController {
     }
 
     @PostMapping("/recordings")
-    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestBody RequestDTO request) throws IOException {
+    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestBody RequestDTO request, @RequestParam("record") MultipartFile file) throws IOException {
 
-        ResponseDTO responseDTO = recordingService.saveRecording(request);
+        ResponseDTO responseDTO = recordingService.saveRecording(request, file);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.builder()

@@ -35,8 +35,7 @@ public class RecordingService {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public ResponseDTO saveRecording(RequestDTO requestDTO) throws IOException {
-        MultipartFile file = requestDTO.getFile();
+    public ResponseDTO saveRecording(RequestDTO requestDTO, MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID() + ".m4a";
         String record = S3_BUCKET_URL + fileName;  // URL 생성
         ObjectMetadata metadata = new ObjectMetadata();

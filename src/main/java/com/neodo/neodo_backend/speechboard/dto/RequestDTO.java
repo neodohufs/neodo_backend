@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class RequestDTO {
-    private MultipartFile file;
     private Long userId;
     private Integer atmosphere;
     private Integer purpose;
