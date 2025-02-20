@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface SpeechCoachingFeedbackJpaRepository extends JpaRepository<SpeechCoachingFeedbackEntity, Long> {
     Optional<SpeechCoachingFeedbackEntity> findById(Long speechCoachingFeedbackId);
+    Optional<SpeechCoachingFeedbackEntity> save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity);
 }

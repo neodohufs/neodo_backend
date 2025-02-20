@@ -5,6 +5,6 @@ import com.neodo.neodo_backend.speechCoachings.infrastructure.entity.SpeechCoach
 import java.util.Optional;
 
 public interface SpeechCoachingFeedbackRepository {
-    Optional<SpeechCoachingFeedbackEntity> findById(Long id);
-    SpeechCoachingFeedbackEntity save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity);
+    Optional<SpeechCoachingFeedbackEntity> findById(Long speechCoachingFeedbackId);
+    Optional<SpeechCoachingFeedbackEntity> save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity);
 }

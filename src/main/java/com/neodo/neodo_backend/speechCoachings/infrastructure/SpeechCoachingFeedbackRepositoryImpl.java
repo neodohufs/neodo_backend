@@ -21,7 +21,7 @@ public class SpeechCoachingFeedbackRepositoryImpl implements SpeechCoachingFeedb
     }
 
     @Override
-    public SpeechCoachingFeedbackEntity save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity){
+    public Optional<SpeechCoachingFeedbackEntity> save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity){
         return speechCoachingFeedbackJpaRepository.save(speechCoachingFeedbackEntity);
     }
 }
