@@ -24,10 +24,16 @@ public enum ErrorResponseEnum implements Response {
     DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
     DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email"),
 
+
     // speech board 관련 에러
     SPEECH_BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Board Cannot Be Found"),
     SPEECH_BOARD_FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Board Feedback Cannot Be Found"),
-    INVALID_SPEECH_BOARD_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Board ID");
+    INVALID_SPEECH_BOARD_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Board ID"),
+
+    //Speechboard Recording
+
+    RECORDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Recording File Cannot Be Found");
+
 
     private final HttpStatus httpStatus;
     private final String message;
