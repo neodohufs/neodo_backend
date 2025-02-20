@@ -1,12 +1,13 @@
 package com.neodo.neodo_backend.speechboard.service;
 
+import com.amazonaws.Request;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
-import com.neodo.neodo_backend.exception.impl.AuthException;
+import com.neodo.neodo_backend.exception.impl.DuplicatedResources;
 import com.neodo.neodo_backend.speechboard.dto.RequestDTO;
+import com.neodo.neodo_backend.speechboard.dto.ResponseDTO;
 import com.neodo.neodo_backend.speechboard.model.SpeechBoardEntity;
-import com.neodo.neodo_backend.speechboard.repository.RecordingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,8 @@ public class RecordingService {
         this.amazonS3Client = amazonS3Client;
     }
 
-    public SpeechBoardEntity saveRecording(RequestDTO request) throws IOException {
-        MultipartFile file = request.getFile();
+    public ResponseDTO saveRecording(RequestDTO requestDTO) throws IOException {
+        MultipartFile file = requestDTO.getFile();
         String fileName = UUID.randomUUID() + ".m4a";
         String record = S3_BUCKET_URL + fileName;  // URL 생성
         ObjectMetadata metadata = new ObjectMetadata();
@@ -46,21 +47,27 @@ public class RecordingService {
         }
 
         SpeechBoardEntity speechBoardEntity = new SpeechBoardEntity(
-                null,
-                request.getUserId(),
+                requestDTO.getUserId(),
                 file.getOriginalFilename(),
                 LocalDateTime.now(),
                 record,
-                request.getAtmosphere(),
-                request.getPurpose(),
-                request.getScale(),
-                request.getAudience(),
-                request.getDeadline()
+                requestDTO.getAtmosphere(),
+                requestDTO.getPurpose(),
+                requestDTO.getScale(),
+                requestDTO.getAudience(),
+                requestDTO.getDeadline()
         );
-        return recordingRepository.save(speechBoardEntity);
+
+        recordingRepository.save(speechBoardEntity);
+
+        return new ResponseDTO(speechBoardEntity);
     }
 
-    public SpeechBoardEntity findRecordingById(Long id) {
-        return recordingRepository.findById(id).orElseThrow(() -> new AuthException(ErrorResponseEnum.RECORDING_NOT_FOUND));
+    public ResponseDTO findRecordingById(Long id) {
+        SpeechBoardEntity speechBoardEntity = recordingRepository.findById(id).orElseThrow(
+                () -> new DuplicatedResources(ErrorResponseEnum.RECORDING_NOT_FOUND));
+
+        return new ResponseDTO(speechBoardEntity);
+
     }
 }

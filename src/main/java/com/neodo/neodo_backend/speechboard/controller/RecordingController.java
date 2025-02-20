@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("api/speech-boards")
+@RequestMapping("/api/speech-boards")
 public class RecordingController {
 
     private final RecordingService recordingService;
@@ -24,29 +24,24 @@ public class RecordingController {
         this.recordingService = recordingService;
     }
 
-    @PostMapping("recordings")
-    public ResponseEntity<CommonResponse<Object>> uploadRecording(
-            @ModelAttribute RequestDTO request) throws IOException {
+    @PostMapping("/recordings")
+    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestBody RequestDTO request) throws IOException {
 
-        SpeechBoardEntity recording = recordingService.saveRecording(request);
+        ResponseDTO responseDTO = recordingService.saveRecording(request);
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.builder()
                         .response(SuccessResponseEnum.RESOURCES_CREATED)
-                        .data(recording)
+                        .data(responseDTO)
                         .build());
     }
 
     @GetMapping("/{id}/record")
     public ResponseEntity<CommonResponse<ResponseDTO>> downloadRecording(@PathVariable Long id) throws Exception {
-        SpeechBoardEntity recording = recordingService.findRecordingById(id);
-
-        ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setId(recording.getId());
-        responseDTO.setTitle(recording.getTitle());
-        responseDTO.setRecord(recording.getRecord());
+        ResponseDTO responseDTO = recordingService.findRecordingById(id);
 
         return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + recording.getTitle() + "\"")
+                .header("Content-Disposition", "attachment; filename=\"" + responseDTO.getTitle() + "\"")
                 .body(CommonResponse.<ResponseDTO>builder()
                         .response(SuccessResponseEnum.READ_S3_URL_INFO)
                         .data(responseDTO)
