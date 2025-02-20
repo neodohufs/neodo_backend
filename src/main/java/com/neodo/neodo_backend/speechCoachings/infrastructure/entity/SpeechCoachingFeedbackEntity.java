@@ -13,10 +13,10 @@ public class SpeechCoachingFeedbackEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "speech_coaching_feedback_id")
-    private Long speechBoardFeedbackId;
+    private Long speechCoachingFeedbackId;
 
     @Column(name = "speech_coaching_id", nullable = false)
-    private Long speechBoardId;
+    private Long speechCoachingId;
 
     @Column(name = "original_stt")
     private String originalStt;
