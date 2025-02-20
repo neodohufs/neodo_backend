@@ -2,7 +2,7 @@ package com.neodo.neodo_backend.speechBoardFeedback.service;
 
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
-import com.neodo.neodo_backend.flask.utils.FlaskRequestUtils;
+import com.neodo.neodo_backend.external.flask.utils.FlaskRequestUtils;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.speechBoardFeedback.controller.port.SpeechBoardFeedbackService;

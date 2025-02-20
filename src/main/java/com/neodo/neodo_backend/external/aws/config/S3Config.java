@@ -1,4 +1,4 @@
-package com.neodo.neodo_backend.aws.config;
+package com.neodo.neodo_backend.external.aws.config;
 
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

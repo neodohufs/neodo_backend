@@ -1,4 +1,4 @@
-package com.neodo.neodo_backend.flask.config;
+package com.neodo.neodo_backend.external.flask.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

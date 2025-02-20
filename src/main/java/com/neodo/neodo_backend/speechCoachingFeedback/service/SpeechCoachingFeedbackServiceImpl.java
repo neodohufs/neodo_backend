@@ -2,7 +2,7 @@ package com.neodo.neodo_backend.speechCoachingFeedback.service;
 
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
-import com.neodo.neodo_backend.flask.utils.FlaskRequestUtils;
+import com.neodo.neodo_backend.external.flask.utils.FlaskRequestUtils;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.speechCoaching.service.port.SpeechCoachingRepository;
 import com.neodo.neodo_backend.speechCoachingFeedback.controller.port.SpeechCoachingFeedbackService;

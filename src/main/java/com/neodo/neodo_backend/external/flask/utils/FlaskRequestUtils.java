@@ -1,4 +1,4 @@
-package com.neodo.neodo_backend.flask.utils;
+package com.neodo.neodo_backend.external.flask.utils;
 
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
