@@ -13,8 +13,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RestController
 @RequestMapping("/api/speech-boards")
 public class SpeechBoardController {
@@ -26,14 +24,14 @@ public class SpeechBoardController {
         this.speechBoardService = speechBoardService;
     }
 
-    @PostMapping("/recordings")
-    public ResponseEntity<CommonResponse<Object>> uploadRecording(@RequestPart("request") RecordRequestDto request,
+    @PostMapping("/record")
+    public ResponseEntity<CommonResponse<RecordResponseDto>> uploadRecording(@RequestPart("request") RecordRequestDto request,
                                                                   @RequestPart("record") MultipartFile file,
-                                                                  @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+                                                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         RecordResponseDto recordResponseDto = speechBoardService.saveRecording(request, file, userDetails.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CommonResponse.builder()
+                .body(CommonResponse.<RecordResponseDto>builder()
                         .response(SuccessResponseEnum.RESOURCES_CREATED)
                         .data(recordResponseDto)
                         .build());
@@ -41,12 +39,11 @@ public class SpeechBoardController {
 
     @GetMapping("/{id}/record")
     public ResponseEntity<CommonResponse<RecordResponseDto>> downloadRecording(@PathVariable Long id) {
-        RecordResponseDto recordResponseDto = speechBoardService.findRecordingById(id);
+        RecordResponseDto recordResponseDto = speechBoardService.findRecording(id);
 
         return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=\"" + recordResponseDto.getTitle() + "\"")
                 .body(CommonResponse.<RecordResponseDto>builder()
-                        .response(SuccessResponseEnum.READ_S3_URL_INFO)
+                        .response(SuccessResponseEnum.RESOURCES_GET)
                         .data(recordResponseDto)
                         .build());
     }

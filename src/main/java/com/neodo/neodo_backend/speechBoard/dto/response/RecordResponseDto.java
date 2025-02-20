@@ -29,6 +29,8 @@ public class RecordResponseDto {
 
     private Long deadline;
 
+    private String record;
+
     public RecordResponseDto(SpeechBoardEntity speechBoardEntity) {
         this.id = speechBoardEntity.getId();
         this.user_id = speechBoardEntity.getUser().getId();
@@ -39,5 +41,6 @@ public class RecordResponseDto {
         this.scale = speechBoardEntity.getScale();
         this.audience = speechBoardEntity.getAudience();
         this.deadline = speechBoardEntity.getDeadline();
+        this.record = speechBoardEntity.getRecord();
     }
 }

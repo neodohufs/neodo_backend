@@ -63,7 +63,7 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
     }
 
     @Override
-    public RecordResponseDto findRecordingById(Long id) {
+    public RecordResponseDto findRecording(Long id) {
         SpeechBoardEntity speechBoardEntity = speechBoardRepository.findById(id).orElseThrow(
                 () -> new ResourceException(ErrorResponseEnum.RECORDING_NOT_FOUND));
 

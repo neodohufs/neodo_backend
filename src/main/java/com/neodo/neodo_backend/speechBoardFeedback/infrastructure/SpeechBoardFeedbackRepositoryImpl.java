@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class SpeechBoardFeedbackRepositoryImpl implements SpeechBoardFeedbackRepository {
 
-    private SpeechBoardFeedbackJpaRepository speechBoardFeedbackJpaRepository;
+    private final SpeechBoardFeedbackJpaRepository speechBoardFeedbackJpaRepository;
 
     @Override
     public void save(SpeechBoardFeedbackEntity speechBoardFeedbackEntity) {
