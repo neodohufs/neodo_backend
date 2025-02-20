@@ -1,7 +1,8 @@
 package com.neodo.neodo_backend.users.dto.request;
 
-import jakarta.validation.constraints.Email;
+import com.neodo.neodo_backend.common.constant.ValidationMessage;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,13 +10,13 @@ import lombok.Setter;
 @Setter
 public class UserCreateRequest {
 
-    @NotBlank(message = "사용자 이름은 필수입니다.")
+    @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
     private String username;
 
-    @NotBlank(message = "비밀번호는 필수입니다.")
+    @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
     private String password;
 
-    @NotBlank(message = "이메일은 필수입니다.")
-    @Email(message = "유효하지 않은 이메일 형식입니다.")
+    @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = ValidationMessage.RESPONSE_NOT_MATCH)
     private String email;
 }

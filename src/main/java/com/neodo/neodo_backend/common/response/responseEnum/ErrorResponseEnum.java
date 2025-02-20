@@ -22,7 +22,15 @@ public enum ErrorResponseEnum implements Response {
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Expired JWT Token. Login Again Is Needed."),
     UNEXPECTED_AUTH_ERROR(HttpStatus.UNAUTHORIZED, "Unexpected Authentication Error"),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "Invalid Token"),
-    UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "Unsupported Token"),;
+    UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "Unsupported Token"),
+
+    //duplicatedResources
+    DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
+    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email"),
+
+    //Speechboard Recording
+
+    RECORDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Recording File Cannot Be Found");
 
     private final HttpStatus httpStatus;
     private final String message;
