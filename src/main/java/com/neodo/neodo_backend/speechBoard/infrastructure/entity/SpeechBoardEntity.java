@@ -1,6 +1,6 @@
 package com.neodo.neodo_backend.speechBoard.infrastructure.entity;
 
-import com.neodo.neodo_backend.speechBoard.dto.request.RequestDTO;
+import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Atmosphere;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Audience;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Purpose;
@@ -47,16 +47,16 @@ public class SpeechBoardEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    public SpeechBoardEntity(UserEntity userEntity, String fileName, String record, RequestDTO requestDTO) {
+    public SpeechBoardEntity(UserEntity userEntity, String fileName, String record, RecordRequestDto recordRequestDto) {
         this.user = userEntity;
         this.title = fileName;
         this.createdAt = LocalDateTime.now();
         this.record = record;
-        this.atmosphere = requestDTO.getAtmosphere();
-        this.purpose = requestDTO.getPurpose();
-        this.scale = requestDTO.getScale();
-        this.audience = requestDTO.getAudience();
-        this.deadline = requestDTO.getDeadline();
+        this.atmosphere = recordRequestDto.getAtmosphere();
+        this.purpose = recordRequestDto.getPurpose();
+        this.scale = recordRequestDto.getScale();
+        this.audience = recordRequestDto.getAudience();
+        this.deadline = recordRequestDto.getDeadline();
     }
 
 }
