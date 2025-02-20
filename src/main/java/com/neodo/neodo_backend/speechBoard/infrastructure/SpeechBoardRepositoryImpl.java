@@ -17,4 +17,9 @@ public class SpeechBoardRepositoryImpl implements SpeechBoardRepository {
     public Optional<SpeechBoardEntity> findById(Long speechBoardId) {
         return speechBoardJpaRepository.findById(speechBoardId);
     }
+
+    @Override
+    public SpeechBoardEntity save(SpeechBoardEntity speechBoardEntity) {
+        return speechBoardJpaRepository.save(speechBoardEntity);
+    }
 }
