@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RequestDTO {
+public class RecordRequestDto {
     private Atmosphere atmosphere;
     private Purpose purpose;
     private Scale scale;

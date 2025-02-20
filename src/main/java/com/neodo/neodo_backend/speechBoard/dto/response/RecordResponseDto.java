@@ -10,7 +10,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class ResponseDTO {
+public class RecordResponseDto {
     private Long id;
 
     private Long user_id;
@@ -29,7 +29,7 @@ public class ResponseDTO {
 
     private Long deadline;
 
-    public ResponseDTO(SpeechBoardEntity speechBoardEntity) {
+    public RecordResponseDto(SpeechBoardEntity speechBoardEntity) {
         this.id = speechBoardEntity.getId();
         this.user_id = speechBoardEntity.getUser().getId();
         this.title = speechBoardEntity.getTitle();
