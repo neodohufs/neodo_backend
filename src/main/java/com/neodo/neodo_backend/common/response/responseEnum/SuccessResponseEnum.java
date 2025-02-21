@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 public enum SuccessResponseEnum implements Response {
     READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
     RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
-    RESOURCES_GET(HttpStatus.OK, "Resourses is got Successfully"),
-    READ_SPEECH_COACHING(HttpStatus.OK, "Speech Coaching List Is Loaded Successfully");
+    RESOURCES_GET(HttpStatus.OK, "Resourses is got Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;

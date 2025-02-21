@@ -26,7 +26,7 @@ public class SpeechCoachingController {
         List<SpeechCoachingTopicResponse> speechCoachingTopicResponse = speechCoachingService.get(userDetails.getUser());
         return ResponseEntity.ok()
                 .body(CommonResponse.<List<SpeechCoachingTopicResponse>>builder()
-                        .response(SuccessResponseEnum.READ_SPEECH_COACHING)
+                        .response(SuccessResponseEnum.RESOURCES_GET)
                         .data(speechCoachingTopicResponse)
                         .build());
     }
