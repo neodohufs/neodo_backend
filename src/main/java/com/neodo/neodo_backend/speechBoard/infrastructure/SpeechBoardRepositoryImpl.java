@@ -5,6 +5,7 @@ import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,5 +22,10 @@ public class SpeechBoardRepositoryImpl implements SpeechBoardRepository {
     @Override
     public SpeechBoardEntity save(SpeechBoardEntity speechBoardEntity) {
         return speechBoardJpaRepository.save(speechBoardEntity);
+    }
+
+    @Override
+    public List<SpeechBoardEntity> findByUserId(Long userId) {
+        return speechBoardJpaRepository.findByUserId(userId);
     }
 }
