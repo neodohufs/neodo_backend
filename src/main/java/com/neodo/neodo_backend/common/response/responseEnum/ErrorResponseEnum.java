@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 public enum ErrorResponseEnum implements Response {
     // Response 유효성 검사
     RESPONSE_NOT_VALID(HttpStatus.BAD_REQUEST, "Response Is Not Valid"),
+    RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "Resource Cannot Be Found"),
+
+    // flask, S3
+    EXTERNAL_SERVICE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server of External Service Error"),
 
     // auth
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "Unauthorized User"),
@@ -22,7 +26,11 @@ public enum ErrorResponseEnum implements Response {
 
     //duplicatedResources
     DUPLICATED_USERNAME(HttpStatus.CONFLICT , "Duplicated username"),
-    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email");
+    DUPLICATED_EMAIL(HttpStatus.CONFLICT , "Duplicated email"),
+
+    //Speechboard Recording
+
+    RECORDING_NOT_FOUND(HttpStatus.NOT_FOUND, "Recording File Cannot Be Found");
 
     private final HttpStatus httpStatus;
     private final String message;
