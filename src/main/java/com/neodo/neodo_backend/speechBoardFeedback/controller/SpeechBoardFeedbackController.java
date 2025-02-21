@@ -20,7 +20,7 @@ public class SpeechBoardFeedbackController {
         SpeechBoardFeedbackResponse speechBoardFeedbackResponse = speechBoardFeedbackService.getFeedback(speechBoardId);
         return ResponseEntity.ok()
                 .body(CommonResponse.<SpeechBoardFeedbackResponse>builder()
-                        .response(SuccessResponseEnum.GET_SPEECH_BOARD_FEEDBACK)
+                        .response(SuccessResponseEnum.RESOURCES_GET)
                         .data(speechBoardFeedbackResponse)
                         .build());
     }
