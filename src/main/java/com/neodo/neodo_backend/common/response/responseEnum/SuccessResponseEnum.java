@@ -11,7 +11,8 @@ public enum SuccessResponseEnum implements Response {
     READ_SPEECH_BOARD_LIST(HttpStatus.OK, "Speech Board List Is Loaded Successfully"),
 
     READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
-    RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully");
+    RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
+    READ_S3_URL_INFO(HttpStatus.OK, "Download URL Is Loaded Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;
