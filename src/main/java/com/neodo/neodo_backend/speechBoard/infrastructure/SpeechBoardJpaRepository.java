@@ -9,4 +9,5 @@ import java.util.List;
 public interface SpeechBoardJpaRepository extends JpaRepository<SpeechBoardEntity, Long> {
 
     List<SpeechBoardEntity> findByUserId(Long userId);
+    List<SpeechBoardEntity> getByUserId(Long userId);
 }

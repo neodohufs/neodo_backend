@@ -1,16 +1,18 @@
-package com.neodo.neodo_backend.speechBoard.controller.port;
+package com.neodo.neodo_backend.speechBoard.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
+import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
 import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
-import com.neodo.neodo_backend.speechBoard.service.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 import static com.neodo.neodo_backend.external.aws.config.S3Config.S3_BUCKET_URL;
 
+@Transactional
 @Service
 public class SpeechBoardServiceImpl implements SpeechBoardService {
 
@@ -69,5 +73,12 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
 
         return new RecordResponseDto(speechBoardEntity);
 
+    }
+
+    @Override
+    public List<SpeechBoardListResponse> get(UserEntity user) {
+        return speechBoardRepository.getByUserId(user.getId()).stream()
+                .map(SpeechBoardListResponse::from)
+                .toList();
     }
 }

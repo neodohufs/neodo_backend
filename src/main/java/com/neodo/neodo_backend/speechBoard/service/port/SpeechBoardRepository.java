@@ -11,4 +11,6 @@ public interface SpeechBoardRepository {
     Optional<SpeechBoardEntity> findById(Long speechBoardId);
 
     List<SpeechBoardEntity> findByUserId(Long userId);
+
+    List<SpeechBoardEntity> getByUserId(Long userId);
 }

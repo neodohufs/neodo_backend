@@ -20,7 +20,7 @@ public class SpeechCoachingFeedbackController {
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = speechCoachingFeedbackService.getFeedback(speechCoachingId);
         return ResponseEntity.ok()
                 .body(CommonResponse.<SpeechCoachingFeedbackResponse>builder()
-                        .response(SuccessResponseEnum.GET_SPEECH_COACHING_FEEDBACK)
+                        .response(SuccessResponseEnum.RESOURCES_GET)
                         .data(speechCoachingFeedbackResponse)
                         .build());
     }
