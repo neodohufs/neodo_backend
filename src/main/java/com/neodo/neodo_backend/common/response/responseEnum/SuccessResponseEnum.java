@@ -11,7 +11,7 @@ public enum SuccessResponseEnum implements Response {
     READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
 
     RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
-    RESOURCES_GET(HttpStatus.CREATED, "Resourses is got Successfully");
+    RESOURCES_GET(HttpStatus.OK, "Resourses is got Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;
