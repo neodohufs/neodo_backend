@@ -10,9 +10,15 @@ import org.springframework.http.HttpStatus;
 public enum SuccessResponseEnum implements Response {
     READ_SPEECH_BOARD_LIST(HttpStatus.OK, "Speech Board List Is Loaded Successfully"),
 
+    // speech board
+    GET_SPEECH_BOARD_FEEDBACK(HttpStatus.OK, "Speech Board Feedback Is Loaded Successfully"),
+
+    // speech coaching
+    GET_SPEECH_COACHING_FEEDBACK(HttpStatus.OK, "Speech Coaching Feedback Is Loaded Successfully"),
+
     READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
     RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
-    READ_S3_URL_INFO(HttpStatus.OK, "Download URL Is Loaded Successfully");
+    RESOURCES_GET(HttpStatus.CREATED, "Resourses is got Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;
