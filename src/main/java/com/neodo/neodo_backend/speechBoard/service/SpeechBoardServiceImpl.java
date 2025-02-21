@@ -8,7 +8,7 @@ import com.neodo.neodo_backend.exception.impl.ResourceException;
 import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
 import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
-import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardResponse;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
@@ -76,9 +76,9 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
     }
 
     @Override
-    public List<SpeechBoardResponse> get(UserEntity user) {
+    public List<SpeechBoardListResponse> get(UserEntity user) {
         return speechBoardRepository.getByUserId(user.getId()).stream()
-                .map(SpeechBoardResponse::from)
+                .map(SpeechBoardListResponse::from)
                 .toList();
     }
 }

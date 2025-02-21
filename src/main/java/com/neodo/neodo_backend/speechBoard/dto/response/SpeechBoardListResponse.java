@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class SpeechBoardResponse {
+public class SpeechBoardListResponse {
     private Long id;
     private Long userId;
     private String title;
     private LocalDateTime createdAt;
 
-    public static SpeechBoardResponse from(SpeechBoardEntity speechBoard) {
-        return SpeechBoardResponse.builder()
+    public static SpeechBoardListResponse from(SpeechBoardEntity speechBoard) {
+        return SpeechBoardListResponse.builder()
                 .id(speechBoard.getId())
                 .userId(speechBoard.getUser().getId())
                 .title(speechBoard.getTitle())

@@ -8,7 +8,7 @@ import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
 import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardResponse;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -54,10 +54,10 @@ public class SpeechBoardController {
     }
 
     @GetMapping
-    public ResponseEntity<CommonResponse<List<SpeechBoardResponse>>> get(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        List<SpeechBoardResponse> response = speechBoardService.get(userDetails.getUser());
+    public ResponseEntity<CommonResponse<List<SpeechBoardListResponse>>> get(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        List<SpeechBoardListResponse> response = speechBoardService.get(userDetails.getUser());
         return ResponseEntity.ok()
-                .body(CommonResponse.<List<SpeechBoardResponse>>builder()
+                .body(CommonResponse.<List<SpeechBoardListResponse>>builder()
                         .response(SuccessResponseEnum.RESOURCES_GET)
                         .data(response)
                         .build());
