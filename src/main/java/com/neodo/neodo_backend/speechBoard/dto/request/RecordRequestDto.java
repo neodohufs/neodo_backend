@@ -6,9 +6,11 @@ import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Purpose;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Scale;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class RecordRequestDto {
     private Atmosphere atmosphere;
     private Purpose purpose;
