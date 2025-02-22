@@ -28,4 +28,5 @@ public class SpeechBoardRepositoryImpl implements SpeechBoardRepository {
     public List<SpeechBoardEntity> getByUserId(Long userId) {
         return speechBoardJpaRepository.getByUserId(userId);
     }
+
 }

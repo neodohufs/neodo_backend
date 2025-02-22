@@ -5,9 +5,12 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
+import com.neodo.neodo_backend.exception.impl.SpeechBoardException;
 import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
+import com.neodo.neodo_backend.speechBoard.dto.request.SpeechBoardChangeTitleRequest;
 import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardChangeTitleResponse;
 import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
@@ -80,5 +83,18 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
         return speechBoardRepository.getByUserId(user.getId()).stream()
                 .map(SpeechBoardListResponse::from)
                 .toList();
+    }
+
+    @Override
+    public SpeechBoardChangeTitleResponse speechBoardChangeTitle(Long speechBoardId, SpeechBoardChangeTitleRequest request){
+
+        SpeechBoardEntity speechBoardEntity = speechBoardRepository.findById(speechBoardId)
+                .orElseThrow(()-> new SpeechBoardException(ErrorResponseEnum.SPEECH_BOARD_NOT_FOUND));
+
+        speechBoardEntity.setTitle(request.getTitle());
+
+        speechBoardRepository.save(speechBoardEntity);
+
+        return SpeechBoardChangeTitleResponse.from(speechBoardEntity);
     }
 }
