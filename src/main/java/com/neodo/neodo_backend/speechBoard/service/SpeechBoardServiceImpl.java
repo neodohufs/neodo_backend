@@ -86,7 +86,6 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
     }
 
     @Override
-    @Transactional
     public SpeechBoardChangeTitleResponse speechBoardChangeTitle(Long speechBoardId, SpeechBoardChangeTitleRequest request){
 
         SpeechBoardEntity speechBoardEntity = speechBoardRepository.findById(speechBoardId)
