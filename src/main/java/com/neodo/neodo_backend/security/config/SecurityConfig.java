@@ -3,6 +3,7 @@ package com.neodo.neodo_backend.security.config;
 import com.neodo.neodo_backend.security.filter.CorsFilter;
 import com.neodo.neodo_backend.security.filter.JwtAuthenticationFilter;
 import com.neodo.neodo_backend.security.filter.JwtAuthorizationFilter;
+import com.neodo.neodo_backend.security.service.LogoutService;
 import com.neodo.neodo_backend.security.service.UserDetailsServiceImpl;
 import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,9 @@ public class SecurityConfig {
 
     private final JwtTokenUtils jwtTokenUtils;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final LogoutService logoutService;
     private final CorsFilter corsFilter;
-
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -46,7 +48,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtTokenUtils);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtTokenUtils, logoutService);
         filter.setAuthenticationManager(authenticationManager()); // AuthenticationManager 설정
         filter.setFilterProcessesUrl("/api/users/login"); // 커스텀 로그인 URL 설정
         return filter;
@@ -68,10 +70,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/login").permitAll()  // 로그인 허용
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
+
                 // 필터 순서 설정
                 .addFilterBefore(corsFilter, ChannelProcessingFilter.class) // CORS 필터
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthorizationFilter(jwtTokenUtils, userDetailsServiceImpl), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthorizationFilter(jwtTokenUtils, userDetailsServiceImpl, logoutService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
