@@ -6,6 +6,10 @@ import com.neodo.neodo_backend.security.service.UserDetailsImpl;
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
 import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
 import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
+import com.neodo.neodo_backend.speechBoard.dto.request.SpeechBoardChangeTitleRequest;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardChangeTitleResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
@@ -59,6 +63,18 @@ public class SpeechBoardController {
         return ResponseEntity.ok()
                 .body(CommonResponse.<List<SpeechBoardListResponse>>builder()
                         .response(SuccessResponseEnum.RESOURCES_GET)
+                        .data(response)
+                        .build());
+    }
+
+    @PatchMapping("{speech_board_id}/title")
+    public ResponseEntity<CommonResponse<SpeechBoardChangeTitleResponse>> speechBoardChangeTitle(@PathVariable("speech_board_id") Long speechBoardId, @Valid @RequestBody SpeechBoardChangeTitleRequest request){
+
+        SpeechBoardChangeTitleResponse response = speechBoardService.speechBoardChangeTitle(speechBoardId, request);
+
+        return ResponseEntity.ok()
+                .body(CommonResponse.<SpeechBoardChangeTitleResponse>builder()
+                        .response(SuccessResponseEnum.TITLE_CHANGED)
                         .data(response)
                         .build());
     }

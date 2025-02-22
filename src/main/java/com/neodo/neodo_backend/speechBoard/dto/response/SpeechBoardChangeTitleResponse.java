@@ -1,7 +1,9 @@
-package com.neodo.neodo_backend.speechBoards.dto.response;
+package com.neodo.neodo_backend.speechBoard.dto.response;
 
-import com.neodo.neodo_backend.speechBoards.infrastructure.entity.SpeechBoardEntity;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
+import lombok.Getter;
 
+@Getter
 public class SpeechBoardChangeTitleResponse {
 
     private Long speechBoardId;

@@ -1,7 +1,9 @@
 package com.neodo.neodo_backend.speechBoard.controller.port;
 
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
+import com.neodo.neodo_backend.speechBoard.dto.request.SpeechBoardChangeTitleRequest;
 import com.neodo.neodo_backend.speechBoard.dto.response.RecordResponseDto;
+import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardChangeTitleResponse;
 import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,4 +16,6 @@ public interface SpeechBoardService {
     RecordResponseDto findRecording(Long id);
 
     List<SpeechBoardListResponse> get(UserEntity user);
+
+    SpeechBoardChangeTitleResponse speechBoardChangeTitle(Long speechBoardId, SpeechBoardChangeTitleRequest request);
 }
