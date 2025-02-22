@@ -25,7 +25,7 @@ public class CorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         // 허용할 Origin(출처)을 설정
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:65252");
         // 브라우저가 인증 정보(쿠키, 인증 헤더 등)를 포함한 요청을 허용할지 설정
         response.setHeader("Access-Control-Allow-Credentials", "true");
         // 허용할 HTTP 메서드(GET, POST, PUT 등)를 설정

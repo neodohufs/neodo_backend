@@ -80,7 +80,7 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
 
     @Override
     public List<SpeechBoardListResponse> get(UserEntity user) {
-        return speechBoardRepository.getByUserId(user.getId()).stream()
+        return speechBoardRepository.findByUserId(user.getId()).stream()
                 .map(SpeechBoardListResponse::from)
                 .toList();
     }

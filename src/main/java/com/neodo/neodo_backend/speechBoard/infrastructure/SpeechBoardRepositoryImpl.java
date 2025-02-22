@@ -25,8 +25,8 @@ public class SpeechBoardRepositoryImpl implements SpeechBoardRepository {
     }
 
     @Override
-    public List<SpeechBoardEntity> getByUserId(Long userId) {
-        return speechBoardJpaRepository.getByUserId(userId);
+    public List<SpeechBoardEntity> findByUserId(Long userId) {
+        return speechBoardJpaRepository.findByUserId(userId);
     }
 
 }

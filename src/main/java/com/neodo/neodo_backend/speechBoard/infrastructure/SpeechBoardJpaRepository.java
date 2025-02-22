@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+
 public interface SpeechBoardJpaRepository extends JpaRepository<SpeechBoardEntity, Long> {
 
-    List<SpeechBoardEntity> getByUserId(Long userId);
+    List<SpeechBoardEntity> findByUserId(Long userId);
 }
