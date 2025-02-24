@@ -2,11 +2,14 @@ package com.neodo.neodo_backend.speechBoardFeedback.service;
 
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
+import com.neodo.neodo_backend.exception.impl.SpeechBoardException;
 import com.neodo.neodo_backend.external.flask.utils.FlaskRequestUtils;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.speechBoardFeedback.controller.port.SpeechBoardFeedbackService;
+import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardChangeTextRequest;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
+import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardChangeTextResponse;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import com.neodo.neodo_backend.speechBoardFeedback.infrastructure.entity.SpeechBoardFeedbackEntity;
 import com.neodo.neodo_backend.speechBoardFeedback.service.port.SpeechBoardFeedbackRepository;
@@ -60,5 +63,18 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
         }
 
         return speechBoardFeedbackResponse;
+    }
+
+    @Override
+    public SpeechBoardChangeTextResponse speechBoardChangeText(Long speechBoardId , SpeechBoardChangeTextRequest request){
+
+        SpeechBoardFeedbackEntity speechBoardFeedbackEntity = speechBoardFeedbackRepository.findById(request.getSpeechBoardFeedbackId())
+                .orElseThrow(()-> new SpeechBoardException(ErrorResponseEnum.SPEECH_BOARD_FEEDBACK_NOT_FOUND));
+
+        speechBoardFeedbackEntity.setModifiedStt(request.getModified_stt());
+
+        speechBoardFeedbackRepository.save(speechBoardFeedbackEntity);
+
+        return SpeechBoardChangeTextResponse.from(speechBoardFeedbackEntity);
     }
 }

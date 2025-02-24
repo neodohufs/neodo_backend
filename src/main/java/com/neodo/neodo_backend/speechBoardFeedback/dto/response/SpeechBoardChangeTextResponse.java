@@ -1,8 +1,8 @@
-package com.neodo.neodo_backend.speechBoards.dto.response;
+package com.neodo.neodo_backend.speechBoardFeedback.dto.response;
 
-import com.neodo.neodo_backend.speechBoards.infrastructure.entity.SpeechBoardFeedbackEntity;
+import com.neodo.neodo_backend.speechBoardFeedback.infrastructure.entity.SpeechBoardFeedbackEntity;
+
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class SpeechBoardChangeTextResponse {
@@ -18,6 +18,6 @@ public class SpeechBoardChangeTextResponse {
     }
 
     public static SpeechBoardChangeTextResponse from(SpeechBoardFeedbackEntity speechBoardFeedback){
-        return new SpeechBoardChangeTextResponse(speechBoardFeedback.getSpeechBoardFeedbackId(), speechBoardFeedback.getSpeechBoardId(), speechBoardFeedback.getModifiedStt());
+        return new SpeechBoardChangeTextResponse(speechBoardFeedback.getId(), speechBoardFeedback.getSpeechBoardEntity().getId(), speechBoardFeedback.getModifiedStt());
     }
 }

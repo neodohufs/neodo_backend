@@ -4,10 +4,12 @@ import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEnti
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "speech_board_feedbacks")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SpeechBoardFeedbackEntity {
@@ -31,6 +33,10 @@ public class SpeechBoardFeedbackEntity {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String conclusion;
+
+    public void setModifiedStt(String modifiedStt) {
+        this.modifiedStt = modifiedStt;
+    }
 
     @Builder
     public SpeechBoardFeedbackEntity(SpeechBoardEntity speechBoardEntity, String originalStt, String modifiedStt, int score, String conclusion) {

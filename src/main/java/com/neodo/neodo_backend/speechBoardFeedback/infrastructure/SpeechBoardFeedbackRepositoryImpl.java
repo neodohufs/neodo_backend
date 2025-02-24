@@ -5,6 +5,8 @@ import com.neodo.neodo_backend.speechBoardFeedback.service.port.SpeechBoardFeedb
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class SpeechBoardFeedbackRepositoryImpl implements SpeechBoardFeedbackRepository {
@@ -14,5 +16,10 @@ public class SpeechBoardFeedbackRepositoryImpl implements SpeechBoardFeedbackRep
     @Override
     public void save(SpeechBoardFeedbackEntity speechBoardFeedbackEntity) {
         speechBoardFeedbackJpaRepository.save(speechBoardFeedbackEntity);
+    }
+
+    @Override
+    public Optional<SpeechBoardFeedbackEntity> findById(Long speechBoardFeedbackId) {
+        return speechBoardFeedbackJpaRepository.findById(speechBoardFeedbackId);
     }
 }
