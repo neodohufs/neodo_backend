@@ -13,7 +13,8 @@ public enum SuccessResponseEnum implements Response {
     RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
     RESOURCES_GET(HttpStatus.OK, "Resourses is got Successfully"),
 
-    TITLE_CHANGED(HttpStatus.OK, "Title is changed Succusfully");
+    TITLE_CHANGED(HttpStatus.OK, "Title is changed Succusfully"),
+    TEXT_CHANGED(HttpStatus.OK, "Text is changed Successfully");
 
     private final HttpStatus httpStatus;
     private final String message;
