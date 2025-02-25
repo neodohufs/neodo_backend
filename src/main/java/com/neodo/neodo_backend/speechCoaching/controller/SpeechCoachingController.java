@@ -35,7 +35,7 @@ public class SpeechCoachingController {
         SpeechCoachingRecordRequestDto speechCoachingRecordResponseDto = speechCoachingService.saveRecording(request, file, userDetails.getUser());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CommonResponse.builder()
+                .body(CommonResponse.<SpeechCoachingRecordResponseDto>builder()
                         .response(SuccessResponseEnum.RESOURCES_CREATED)
                         .data(speechCoachingRecordResponseDto)
                         .build());
