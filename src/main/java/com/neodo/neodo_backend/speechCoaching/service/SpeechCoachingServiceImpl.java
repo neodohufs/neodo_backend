@@ -54,8 +54,8 @@ public class SpeechCoachingServiceImpl implements SpeechCoachingService {
         }
 
         SpeechCoachingEntity speechCoachingEntity = new SpeechCoachingEntity(
-                record,
-                file.getOriginalFilename()
+                file.getOriginalFilename(),
+                record
         );
 
         speechCoachingRepository.save(speechCoachingEntity);
