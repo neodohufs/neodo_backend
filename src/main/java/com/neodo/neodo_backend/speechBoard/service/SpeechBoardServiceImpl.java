@@ -75,7 +75,6 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
                 () -> new ResourceException(ErrorResponseEnum.RECORDING_NOT_FOUND));
 
         return new RecordResponseDto(speechBoardEntity);
-
     }
 
     @Override

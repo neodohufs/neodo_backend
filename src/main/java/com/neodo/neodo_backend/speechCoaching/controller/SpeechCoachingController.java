@@ -29,10 +29,9 @@ public class SpeechCoachingController {
 
 
     @PostMapping("/record")
-    public ResponseEntity<CommonResponse<SpeechCoachingRecordResponseDto>> uploadSpeechCoachingRecording(@RequestPart("request")SpeechCoachingRecordRequestDto request,
-                                                                                                         @RequestPart("file")MultipartFile file,
+    public ResponseEntity<CommonResponse<SpeechCoachingRecordResponseDto>> uploadSpeechCoachingRecording(@RequestPart("file")MultipartFile file,
                                                                                                          @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        SpeechCoachingRecordRequestDto speechCoachingRecordResponseDto = speechCoachingService.saveRecording(request, file, userDetails.getUser());
+        SpeechCoachingRecordResponseDto speechCoachingRecordResponseDto = speechCoachingService.saveRecording(file);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CommonResponse.<SpeechCoachingRecordResponseDto>builder()

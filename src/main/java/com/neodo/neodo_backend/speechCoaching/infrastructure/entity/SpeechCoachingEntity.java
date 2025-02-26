@@ -24,4 +24,10 @@ public class SpeechCoachingEntity {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    public SpeechCoachingEntity(String originalFilename, String record) {
+    }
+
+    public SpeechCoachingEntity() {
+
+    }
 }
