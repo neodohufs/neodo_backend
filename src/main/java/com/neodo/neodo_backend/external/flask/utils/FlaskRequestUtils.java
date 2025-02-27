@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import static com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum.EXTERNAL_SERVICE_ERROR;
 import static com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum.RESPONSE_NOT_VALID;
@@ -53,7 +54,9 @@ public class FlaskRequestUtils {
 
         try {
             ResponseEntity<SpeechCoachingFeedbackResponse> responseEntity = restTemplate.exchange(
-                    flaskServerUrl + "coach",
+                    UriComponentsBuilder.fromHttpUrl(flaskServerUrl)
+                            .path("coach")
+                            .toUriString(),
                     HttpMethod.POST,
                     requestEntity,
                     SpeechCoachingFeedbackResponse.class
