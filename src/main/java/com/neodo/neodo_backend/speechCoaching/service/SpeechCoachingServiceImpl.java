@@ -5,12 +5,16 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
+import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
+import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.speechCoaching.controller.port.SpeechCoachingService;
 import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingRecordResponseDto;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.speechCoaching.service.port.SpeechCoachingRepository;
+import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingTopicResponse;
 import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import com.neodo.neodo_backend.topic.service.port.TopicRepository;
+import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.neodo.neodo_backend.external.aws.config.S3Config.S3_BUCKET_URL;
 
@@ -27,6 +35,7 @@ import static com.neodo.neodo_backend.external.aws.config.S3Config.S3_BUCKET_URL
 @Service
 @RequiredArgsConstructor
 public class SpeechCoachingServiceImpl implements SpeechCoachingService {
+    private final SpeechBoardRepository speechBoardRepository;
 
     private final SpeechCoachingRepository speechCoachingRepository;
 
@@ -71,5 +80,21 @@ public class SpeechCoachingServiceImpl implements SpeechCoachingService {
                 () -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
         return new SpeechCoachingRecordResponseDto(speechCoachingEntity);
+    }
+
+    @Override
+    public List<SpeechCoachingTopicResponse> get(UserEntity user) {
+        List<SpeechBoardEntity> speechBoardEntities = speechBoardRepository.findByUserId(user.getId());
+        List<TopicEntity> topicEntities = topicRepository.findBySpeechBoardEntityIn(speechBoardEntities);
+
+        Map<Long, List<TopicEntity>> topicsByBoardId = topicEntities.stream()
+                .collect(Collectors.groupingBy(topic -> topic.getSpeechBoardEntity().getId()));
+
+        return speechBoardEntities.stream()
+                .map(speechBoard -> SpeechCoachingTopicResponse.from(
+                        speechBoard,
+                        topicsByBoardId.getOrDefault(speechBoard.getId(), Collections.emptyList()) // 해당 보드에 토픽이 없으면 빈 리스트 반환
+                ))
+                .collect(Collectors.toList());
     }
 }
