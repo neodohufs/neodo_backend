@@ -55,7 +55,7 @@ public class FlaskRequestUtils {
         try {
             ResponseEntity<SpeechCoachingFeedbackResponse> responseEntity = restTemplate.exchange(
                     UriComponentsBuilder.fromHttpUrl(flaskServerUrl)
-                            .path("/coach")
+                            .path("coach")
                             .toUriString(),
                     HttpMethod.POST,
                     requestEntity,
