@@ -33,4 +33,15 @@ public class SpeechCoachingController {
                         .data(speechCoachingRecordResponseDto)
                         .build());
     }
+
+    @GetMapping("/speech-coachings/{speech-coaching-id}/record")
+    public ResponseEntity<CommonResponse<SpeechCoachingRecordResponseDto>> downloadRecording(@PathVariable("speech-coaching-id") Long speechCoachingId) {
+        SpeechCoachingRecordResponseDto speechCoachingRecordResponseDto = speechCoachingService.findRecording(speechCoachingId);
+        return ResponseEntity.ok()
+                .body(CommonResponse.<SpeechCoachingRecordResponseDto>builder()
+                        .response(SuccessResponseEnum.RESOURCES_GET)
+                        .data(speechCoachingRecordResponseDto)
+                        .build());
+    }
+
 }

@@ -6,7 +6,6 @@ import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
 import com.neodo.neodo_backend.speechCoaching.controller.port.SpeechCoachingService;
-import com.neodo.neodo_backend.speechCoaching.dto.request.SpeechCoachingRecordRequestDto;
 import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingRecordResponseDto;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.speechCoaching.service.port.SpeechCoachingRepository;
@@ -67,7 +66,10 @@ public class SpeechCoachingServiceImpl implements SpeechCoachingService {
     }
 
     @Override
-    public SpeechCoachingRecordRequestDto findrecording(Long id) {
-        return null;
+    public SpeechCoachingRecordResponseDto findRecording(Long speechCoachingId) {
+        SpeechCoachingEntity speechCoachingEntity = speechCoachingRepository.findById(speechCoachingId).orElseThrow(
+                () -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+
+        return new SpeechCoachingRecordResponseDto(speechCoachingEntity);
     }
 }
