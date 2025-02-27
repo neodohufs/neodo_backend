@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
-import com.neodo.neodo_backend.exception.impl.SpeechBoardException;
 import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.dto.request.RecordRequestDto;
 import com.neodo.neodo_backend.speechBoard.dto.request.SpeechBoardChangeTitleRequest;
@@ -88,7 +87,7 @@ public class SpeechBoardServiceImpl implements SpeechBoardService {
     public SpeechBoardChangeTitleResponse speechBoardChangeTitle(Long speechBoardId, SpeechBoardChangeTitleRequest request){
 
         SpeechBoardEntity speechBoardEntity = speechBoardRepository.findById(speechBoardId)
-                .orElseThrow(()-> new SpeechBoardException(ErrorResponseEnum.SPEECH_BOARD_NOT_FOUND));
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.SPEECH_BOARD_NOT_FOUND));
 
         speechBoardEntity.setTitle(request.getTitle());
 
