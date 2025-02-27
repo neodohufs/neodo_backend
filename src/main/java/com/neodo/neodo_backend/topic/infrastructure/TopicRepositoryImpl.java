@@ -6,6 +6,8 @@ import com.neodo.neodo_backend.topic.service.port.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import java.util.List;
 
 @Repository
@@ -17,6 +19,11 @@ public class TopicRepositoryImpl implements TopicRepository {
     @Override
     public void save(TopicEntity topicEntity) {
         topicJpaRepository.save(topicEntity);
+    }
+
+    @Override
+    public Optional<TopicEntity> findById(Long topicId) {
+        return topicJpaRepository.findById(topicId);
     }
 
     @Override

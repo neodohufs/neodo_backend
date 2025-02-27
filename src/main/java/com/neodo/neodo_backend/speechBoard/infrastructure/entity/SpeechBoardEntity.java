@@ -46,6 +46,10 @@ public class SpeechBoardEntity {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Builder
     public SpeechBoardEntity(UserEntity userEntity, String fileName, String record, RecordRequestDto recordRequestDto) {
         this.user = userEntity;
