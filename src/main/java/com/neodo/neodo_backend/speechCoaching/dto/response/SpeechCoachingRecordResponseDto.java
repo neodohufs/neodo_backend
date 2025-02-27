@@ -1,7 +1,6 @@
 package com.neodo.neodo_backend.speechCoaching.dto.response;
 
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
-import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -9,9 +8,11 @@ import java.time.LocalDateTime;
 @Getter
 public class SpeechCoachingRecordResponseDto {
 
-    private Long id;
+    private Long speechCoachingId;
 
-    private TopicEntity topic_id;
+    private Long topicId;
+
+    private String topic;
 
     private String title;
 
@@ -19,10 +20,10 @@ public class SpeechCoachingRecordResponseDto {
 
     private String record;
 
-
     public SpeechCoachingRecordResponseDto(SpeechCoachingEntity speechCoachingEntity) {
-        this.id = speechCoachingEntity.getId();
-        this.topic_id = speechCoachingEntity.getTopicEntity();
+        this.speechCoachingId = speechCoachingEntity.getId();
+        this.topicId = speechCoachingEntity.getTopicEntity().getId();
+        this.topic = speechCoachingEntity.getTopicEntity().getTopic();
         this.title = speechCoachingEntity.getTitle();
         this.createdAt = speechCoachingEntity.getCreatedAt();
         this.record = speechCoachingEntity.getRecord();
