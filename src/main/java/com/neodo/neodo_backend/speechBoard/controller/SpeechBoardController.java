@@ -9,7 +9,6 @@ import com.neodo.neodo_backend.speechBoard.controller.port.SpeechBoardService;
 import com.neodo.neodo_backend.speechBoard.dto.request.SpeechBoardChangeTitleRequest;
 import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardChangeTitleResponse;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.neodo.neodo_backend.speechBoard.dto.response.SpeechBoardListResponse;
