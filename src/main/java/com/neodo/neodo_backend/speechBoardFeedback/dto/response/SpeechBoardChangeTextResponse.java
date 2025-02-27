@@ -9,12 +9,12 @@ public class SpeechBoardChangeTextResponse {
 
     private Long speechBoardFeedbackId;
     private Long speechBoardId;
-    private String modified_stt;
+    private String modifiedStt;
 
-    public SpeechBoardChangeTextResponse(Long speechBoardFeedbackId, Long speechBoardId, String modified_stt) {
+    public SpeechBoardChangeTextResponse(Long speechBoardFeedbackId, Long speechBoardId, String modifiedStt) {
         this.speechBoardFeedbackId = speechBoardFeedbackId;
         this.speechBoardId = speechBoardId;
-        this.modified_stt = modified_stt;
+        this.modifiedStt = modifiedStt;
     }
 
     public static SpeechBoardChangeTextResponse from(SpeechBoardFeedbackEntity speechBoardFeedback){

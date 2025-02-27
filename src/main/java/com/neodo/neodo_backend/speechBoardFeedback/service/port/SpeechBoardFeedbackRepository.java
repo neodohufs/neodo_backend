@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface SpeechBoardFeedbackRepository {
     void save(SpeechBoardFeedbackEntity speechBoardFeedbackEntity);
-    Optional<SpeechBoardFeedbackEntity> findById(Long speechBoardFeedbackId);
+    Optional<SpeechBoardFeedbackEntity> findBySpeechBoardEntity_Id(Long speechBoardId);
 }

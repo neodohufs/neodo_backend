@@ -2,7 +2,6 @@ package com.neodo.neodo_backend.speechBoardFeedback.service;
 
 import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
-import com.neodo.neodo_backend.exception.impl.SpeechBoardException;
 import com.neodo.neodo_backend.external.flask.utils.FlaskRequestUtils;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
@@ -68,10 +67,10 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
     @Override
     public SpeechBoardChangeTextResponse speechBoardChangeText(Long speechBoardId , SpeechBoardChangeTextRequest request){
 
-        SpeechBoardFeedbackEntity speechBoardFeedbackEntity = speechBoardFeedbackRepository.findById(request.getSpeechBoardFeedbackId())
-                .orElseThrow(()-> new SpeechBoardException(ErrorResponseEnum.SPEECH_BOARD_FEEDBACK_NOT_FOUND));
+        SpeechBoardFeedbackEntity speechBoardFeedbackEntity = speechBoardFeedbackRepository.findBySpeechBoardEntity_Id(speechBoardId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.SPEECH_BOARD_FEEDBACK_NOT_FOUND));
 
-        speechBoardFeedbackEntity.setModifiedStt(request.getModified_stt());
+        speechBoardFeedbackEntity.setModifiedStt(request.getModifiedStt());
 
         speechBoardFeedbackRepository.save(speechBoardFeedbackEntity);
 

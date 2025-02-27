@@ -28,8 +28,8 @@ public class SpeechBoardFeedbackController {
                         .build());
     }
 
-    @PatchMapping("{speech_board_id}/text")
-    public ResponseEntity<CommonResponse<SpeechBoardChangeTextResponse>> speechBoardChangeText(@PathVariable("speech_board_id") Long speechBoardId, @Valid @RequestBody SpeechBoardChangeTextRequest request){
+    @PatchMapping("/{speech-board-id}/text")
+    public ResponseEntity<CommonResponse<SpeechBoardChangeTextResponse>> speechBoardChangeText(@PathVariable("speech-board-id") Long speechBoardId, @Valid @RequestBody SpeechBoardChangeTextRequest request){
         SpeechBoardChangeTextResponse response = speechBoardFeedbackService.speechBoardChangeText(speechBoardId, request);
 
         return ResponseEntity.ok()

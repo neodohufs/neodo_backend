@@ -8,9 +8,6 @@ import lombok.Getter;
 @Getter
 public class SpeechBoardChangeTextRequest {
 
-    @NotNull(message = ValidationMessage.RESPONSE_NOT_BLANK)
-    private Long speechBoardFeedbackId;
-
     @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
-    private String modified_stt;
+    private String modifiedStt;
 }
