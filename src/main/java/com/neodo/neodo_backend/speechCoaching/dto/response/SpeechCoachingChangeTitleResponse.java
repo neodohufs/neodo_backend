@@ -1,6 +1,6 @@
-package com.neodo.neodo_backend.speechCoachings.dto.response;
+package com.neodo.neodo_backend.speechCoaching.dto.response;
 
-import com.neodo.neodo_backend.speechCoachings.infrastructure.entity.SpeechCoachingEntity;
+import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 
 public class SpeechCoachingChangeTitleResponse {
 
@@ -13,6 +13,6 @@ public class SpeechCoachingChangeTitleResponse {
     }
 
     public static SpeechCoachingChangeTitleResponse from(SpeechCoachingEntity speechCoaching){
-        return new SpeechCoachingChangeTitleResponse(speechCoaching.getSpeechCoachingId(), speechCoaching.getTitle());
+        return new SpeechCoachingChangeTitleResponse(speechCoaching.getId(), speechCoaching.getTitle());
     }
 }

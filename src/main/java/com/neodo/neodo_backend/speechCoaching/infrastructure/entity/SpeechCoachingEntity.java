@@ -27,6 +27,10 @@ public class SpeechCoachingEntity {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Builder
     public SpeechCoachingEntity(String title, String record, TopicEntity topicEntity) {
         this.title = title;
