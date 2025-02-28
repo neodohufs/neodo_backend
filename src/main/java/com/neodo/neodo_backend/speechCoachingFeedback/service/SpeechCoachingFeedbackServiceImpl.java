@@ -6,12 +6,15 @@ import com.neodo.neodo_backend.external.flask.utils.FlaskRequestUtils;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.speechCoaching.service.port.SpeechCoachingRepository;
 import com.neodo.neodo_backend.speechCoachingFeedback.controller.port.SpeechCoachingFeedbackService;
+import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingChangeTextResponse;
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
+import com.neodo.neodo_backend.speechCoachingFeedback.dto.request.SpeechCoachingChangeTextRequest;
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.request.SpeechCoachingFeedbackRequest;
 import com.neodo.neodo_backend.speechCoachingFeedback.infrastructure.entity.SpeechCoachingFeedbackEntity;
 import com.neodo.neodo_backend.speechCoachingFeedback.service.port.SpeechCoachingFeedbackRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedback
 
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = flaskRequestUtils.requestSpeechCoachingFeedback(speechCoachingFeedbackRequest);
         SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity = SpeechCoachingFeedbackEntity.builder()
-                .speechcoachingEntity(speechCoachingEntity)
+                .speechCoachingEntity(speechCoachingEntity)
                 .originalStt(speechCoachingFeedbackResponse.getOriginalStt())
                 .conclusion(speechCoachingFeedbackResponse.getConclusion())
                 .score(speechCoachingFeedbackResponse.getScore())
@@ -40,5 +43,19 @@ public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedback
         speechCoachingFeedbackRepository.save(speechCoachingFeedbackEntity);
 
         return speechCoachingFeedbackResponse;
+    }
+
+    @Override
+    @Transactional
+    public SpeechCoachingChangeTextResponse speechCoachingChangeText(Long speechCoachingId, SpeechCoachingChangeTextRequest request){
+
+        SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity = speechCoachingFeedbackRepository.findBySpeechCoachingEntity_Id(speechCoachingId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.SPEECH_COACHING_FEEDBACK_NOT_FOUND));
+
+        speechCoachingFeedbackEntity.setModifiedStt(request.getModified_stt());
+
+        speechCoachingFeedbackRepository.save(speechCoachingFeedbackEntity);
+
+        return SpeechCoachingChangeTextResponse.from(speechCoachingFeedbackEntity);
     }
 }

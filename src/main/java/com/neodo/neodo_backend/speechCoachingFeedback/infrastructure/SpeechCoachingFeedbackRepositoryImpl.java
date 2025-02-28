@@ -5,6 +5,8 @@ import com.neodo.neodo_backend.speechCoachingFeedback.service.port.SpeechCoachin
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class SpeechCoachingFeedbackRepositoryImpl implements SpeechCoachingFeedbackRepository {
@@ -14,5 +16,10 @@ public class SpeechCoachingFeedbackRepositoryImpl implements SpeechCoachingFeedb
     @Override
     public void save(SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity) {
         speechCoachingFeedbackJpaRepository.save(speechCoachingFeedbackEntity);
+    }
+
+    @Override
+    public Optional<SpeechCoachingFeedbackEntity> findBySpeechCoachingEntity_Id(Long speechCoachingId){
+        return speechCoachingFeedbackJpaRepository.findBySpeechCoachingEntity_Id(speechCoachingId);
     }
 }
