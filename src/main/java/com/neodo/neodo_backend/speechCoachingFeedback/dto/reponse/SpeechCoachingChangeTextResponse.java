@@ -1,7 +1,9 @@
 package com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse;
 
 import com.neodo.neodo_backend.speechCoachingFeedback.infrastructure.entity.SpeechCoachingFeedbackEntity;
+import lombok.Getter;
 
+@Getter
 public class SpeechCoachingChangeTextResponse {
 
     private Long speechCoachingFeedbackId;
