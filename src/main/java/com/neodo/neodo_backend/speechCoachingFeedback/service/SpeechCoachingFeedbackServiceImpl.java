@@ -52,7 +52,7 @@ public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedback
         SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity = speechCoachingFeedbackRepository.findBySpeechCoachingEntity_Id(speechCoachingId)
                 .orElseThrow(()-> new ResourceException(ErrorResponseEnum.SPEECH_COACHING_FEEDBACK_NOT_FOUND));
 
-        speechCoachingFeedbackEntity.setModifiedStt(request.getModified_stt());
+        speechCoachingFeedbackEntity.setModifiedStt(request.getModifiedStt());
 
         speechCoachingFeedbackRepository.save(speechCoachingFeedbackEntity);
 

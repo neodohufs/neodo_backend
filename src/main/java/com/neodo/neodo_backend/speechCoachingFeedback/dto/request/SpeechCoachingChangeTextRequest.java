@@ -9,5 +9,5 @@ import lombok.Getter;
 public class SpeechCoachingChangeTextRequest {
 
     @NotBlank(message = ValidationMessage.RESPONSE_NOT_BLANK)
-    private String modified_stt;
+    private String modifiedStt;
 }
