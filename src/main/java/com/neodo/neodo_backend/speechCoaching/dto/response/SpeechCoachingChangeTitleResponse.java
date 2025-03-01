@@ -1,7 +1,9 @@
 package com.neodo.neodo_backend.speechCoaching.dto.response;
 
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
+import lombok.Getter;
 
+@Getter
 public class SpeechCoachingChangeTitleResponse {
 
     private Long speechCoachingId;
