@@ -3,10 +3,12 @@ package com.neodo.neodo_backend.speechCoachingFeedback.infrastructure.entity;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "speech_coaching_feedbacks")
+@Getter
 @NoArgsConstructor
 public class SpeechCoachingFeedbackEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +16,7 @@ public class SpeechCoachingFeedbackEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "speech_coaching_id")
-    private SpeechCoachingEntity speechcoachingEntity;
+    private SpeechCoachingEntity speechCoachingEntity;
 
     @Lob
     @Column(columnDefinition = "TEXT")
@@ -30,9 +32,13 @@ public class SpeechCoachingFeedbackEntity {
     @Column(columnDefinition = "TEXT")
     private String conclusion;
 
+    public void setModifiedStt(String modifiedStt) {
+        this.modifiedStt = modifiedStt;
+    }
+
     @Builder
-    public SpeechCoachingFeedbackEntity(SpeechCoachingEntity speechcoachingEntity, String originalStt, String modifiedStt, int score, String conclusion) {
-        this.speechcoachingEntity = speechcoachingEntity;
+    public SpeechCoachingFeedbackEntity(SpeechCoachingEntity speechCoachingEntity, String originalStt, String modifiedStt, int score, String conclusion) {
+        this.speechCoachingEntity = speechCoachingEntity;
         this.originalStt = originalStt;
         this.modifiedStt = modifiedStt;
         this.score = score;

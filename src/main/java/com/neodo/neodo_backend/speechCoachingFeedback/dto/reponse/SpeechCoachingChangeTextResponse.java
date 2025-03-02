@@ -1,0 +1,22 @@
+package com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse;
+
+import com.neodo.neodo_backend.speechCoachingFeedback.infrastructure.entity.SpeechCoachingFeedbackEntity;
+import lombok.Getter;
+
+@Getter
+public class SpeechCoachingChangeTextResponse {
+
+    private Long speechCoachingFeedbackId;
+    private Long speechCoachingId;
+    private String modified_stt;
+
+    public SpeechCoachingChangeTextResponse(Long speechCoachingFeedbackId, Long speechCoachingId, String modified_stt) {
+        this.speechCoachingFeedbackId = speechCoachingFeedbackId;
+        this.speechCoachingId = speechCoachingId;
+        this.modified_stt = modified_stt;
+    }
+
+    public static SpeechCoachingChangeTextResponse from(SpeechCoachingFeedbackEntity speechCoachingFeedback){
+        return new SpeechCoachingChangeTextResponse(speechCoachingFeedback.getId(), speechCoachingFeedback.getSpeechCoachingEntity().getId(), speechCoachingFeedback.getModifiedStt());
+    }
+}
