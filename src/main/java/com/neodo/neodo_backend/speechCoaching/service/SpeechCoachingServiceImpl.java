@@ -8,10 +8,12 @@ import com.neodo.neodo_backend.exception.impl.ResourceException;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
 import com.neodo.neodo_backend.speechBoard.service.port.SpeechBoardRepository;
 import com.neodo.neodo_backend.speechCoaching.controller.port.SpeechCoachingService;
+import com.neodo.neodo_backend.speechCoaching.dto.request.SpeechCoachingChangeTitleRequest;
+import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingChangeTitleResponse;
 import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingRecordResponseDto;
+import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingTopicResponse;
 import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.speechCoaching.service.port.SpeechCoachingRepository;
-import com.neodo.neodo_backend.speechCoaching.dto.response.SpeechCoachingTopicResponse;
 import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import com.neodo.neodo_backend.topic.service.port.TopicRepository;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
@@ -23,10 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.neodo.neodo_backend.external.aws.config.S3Config.S3_BUCKET_URL;
@@ -96,5 +98,18 @@ public class SpeechCoachingServiceImpl implements SpeechCoachingService {
                         topicsByBoardId.getOrDefault(speechBoard.getId(), Collections.emptyList()) // 해당 보드에 토픽이 없으면 빈 리스트 반환
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SpeechCoachingChangeTitleResponse speechCoachingChangeTitle(Long speechCoachingId, SpeechCoachingChangeTitleRequest request){
+
+        SpeechCoachingEntity speechCoachingEntity = speechCoachingRepository.findById(speechCoachingId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.SPEECH_COACHING_NOT_FOUND));
+
+        speechCoachingEntity.setTitle(request.getTitle()); //제목 업데이트
+
+        speechCoachingRepository.save(speechCoachingEntity);
+
+        return SpeechCoachingChangeTitleResponse.from(speechCoachingEntity);
     }
 }

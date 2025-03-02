@@ -34,8 +34,12 @@ public enum ErrorResponseEnum implements Response {
     // speech board 관련 에러
     SPEECH_BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Board Cannot Be Found"),
     SPEECH_BOARD_FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Board Feedback Cannot Be Found"),
-    INVALID_SPEECH_BOARD_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Board ID");
+    INVALID_SPEECH_BOARD_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Board ID"),
 
+    //speech coaching 관련 에러
+    SPEECH_COACHING_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Coaching Cannot Be Found"),
+    SPEECH_COACHING_FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Speech Coaching Feedback Cannot Be Found"),
+    INVALID_SPEECH_COACHING_ID(HttpStatus.BAD_REQUEST, "Invalid Speech Coaching ID");
 
     private final HttpStatus httpStatus;
     private final String message;
