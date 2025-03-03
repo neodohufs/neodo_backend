@@ -5,6 +5,7 @@ import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.AuthException;
 import com.neodo.neodo_backend.security.constant.Role;
 import com.neodo.neodo_backend.security.dto.LoginRequest;
+import com.neodo.neodo_backend.security.service.LogoutService;
 import com.neodo.neodo_backend.security.utils.JwtTokenUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static com.neodo.neodo_backend.security.constant.JwtTokenConstant.*;
+import static com.neodo.neodo_backend.security.constant.JwtTokenConstant.AUTH_ACCESS_HEADER;
+import static com.neodo.neodo_backend.security.constant.JwtTokenConstant.AUTH_REFRESH_HEADER;
 
 @RequiredArgsConstructor
 @Slf4j(topic = "JwtAuthenticationFilter")
