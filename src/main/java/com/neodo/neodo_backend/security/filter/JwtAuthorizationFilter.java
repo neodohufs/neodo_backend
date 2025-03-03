@@ -33,7 +33,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final JwtTokenUtils jwtTokenUtils;
     private final UserDetailsService userDetailsService;
     private final LogoutService logoutService;
-    //private final TokenBlacklist tokenBlacklist;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -63,11 +62,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     throw new AuthException(ErrorResponseEnum.INVALID_TOKEN);
                 }
 
-                Long tokenIat = claims.getIssuedAt().getTime();
+                Long tokenIssuedAt = claims.getIssuedAt().getTime();
 
                 // 최소 유효 발급 시간 확인 (로그아웃 시간 이후 발급된 토큰인지 검증)
                 Long logoutTimestamp = logoutService.getUserLogoutTimestamp(email);
-                if (logoutTimestamp != null && tokenIat < logoutTimestamp) {
+                if (logoutTimestamp != null && tokenIssuedAt < logoutTimestamp) {
                     log.warn("로그아웃된 accessToken");
                     throw new AuthException(ErrorResponseEnum.INVALID_TOKEN);
                 }

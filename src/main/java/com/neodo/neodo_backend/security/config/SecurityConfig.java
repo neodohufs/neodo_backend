@@ -48,7 +48,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtTokenUtils, logoutService);
+        JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtTokenUtils);
         filter.setAuthenticationManager(authenticationManager()); // AuthenticationManager 설정
         filter.setFilterProcessesUrl("/api/users/login"); // 커스텀 로그인 URL 설정
         return filter;

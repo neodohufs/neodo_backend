@@ -31,7 +31,6 @@ import static com.neodo.neodo_backend.security.constant.JwtTokenConstant.AUTH_RE
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtTokenUtils jwtTokenUtils;
-    private final LogoutService logoutService;
 
     @Override
     public Authentication attemptAuthentication(
