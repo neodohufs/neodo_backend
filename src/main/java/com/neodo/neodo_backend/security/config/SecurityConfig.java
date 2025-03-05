@@ -67,7 +67,10 @@ public class SecurityConfig {
                 // 요청 인증 설정
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.POST, "/api/users/signup").permitAll()  // 회원가입 허용 (POST /api/users)
-                        .requestMatchers("/api/users/login").permitAll()  // 로그인 허용
+                        .requestMatchers("/api/users/login",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**").permitAll()  // 로그인 허용
                         .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 )
 

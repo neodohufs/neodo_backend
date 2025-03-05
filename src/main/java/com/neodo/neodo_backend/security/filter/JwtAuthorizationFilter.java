@@ -39,8 +39,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         String method = request.getMethod();
 
-        // 인증이 필요 없는 URL 및 HTTP 메서드 설정
-        return "/api/users/signup".equals(requestURI) && "POST".equalsIgnoreCase(method);
+        return ("/api/users/signup".equals(requestURI) && "POST".equalsIgnoreCase(method)) ||
+                requestURI.startsWith("/swagger-ui/") ||
+                requestURI.startsWith("/v3/api-docs") ||
+                requestURI.startsWith("/swagger-resources");
     }
 
     @Override
