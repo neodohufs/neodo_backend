@@ -27,6 +27,11 @@ public class TopicRepositoryImpl implements TopicRepository {
     }
 
     @Override
+    public List<TopicEntity> findBySpeechBoardEntity(SpeechBoardEntity speechBoardEntity) {
+        return topicJpaRepository.findBySpeechBoardEntity(speechBoardEntity);
+    }
+
+    @Override
     public List<TopicEntity> findBySpeechBoardEntityIn(List<SpeechBoardEntity> speechBoardEntities) {
         return topicJpaRepository.findBySpeechBoardEntityIn(speechBoardEntities);
     }
