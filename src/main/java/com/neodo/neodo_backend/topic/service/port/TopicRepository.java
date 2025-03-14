@@ -13,4 +13,6 @@ public interface TopicRepository {
     List<TopicEntity> findBySpeechBoardEntityIn(List<SpeechBoardEntity> speechBoardEntities);
 
     Optional<TopicEntity> findById(Long topicId);
+
+    List<TopicEntity> findBySpeechBoardEntity(SpeechBoardEntity speechBoardEntity);
 }

@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TopicJpaRepository extends JpaRepository<TopicEntity, Long> {
     List<TopicEntity> findBySpeechBoardEntityIn(List<SpeechBoardEntity> speechBoardEntities);
+    List<TopicEntity> findBySpeechBoardEntity(SpeechBoardEntity speechBoardEntity);
 }

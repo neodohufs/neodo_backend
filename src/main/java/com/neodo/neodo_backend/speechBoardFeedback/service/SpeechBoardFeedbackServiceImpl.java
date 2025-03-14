@@ -18,6 +18,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +34,33 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
 
     @Override
     public SpeechBoardFeedbackResponse getFeedback(Long speechBoardId) {
-        SpeechBoardEntity speechBoardEntity = speechBoardRepository.findById(speechBoardId)
-                .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+        SpeechBoardEntity speechBoardEntity = getSpeechBoardEntity(speechBoardId);
 
-        SpeechBoardFeedbackRequest speechBoardFeedbackRequest = SpeechBoardFeedbackRequest.builder()
+        return speechBoardFeedbackRepository.findBySpeechBoardEntity_Id(speechBoardEntity.getId())
+                .map(feedbackEntity -> buildFeedbackResponseFromEntity(feedbackEntity, speechBoardEntity))
+                .orElseGet(() -> createAndSaveFeedback(speechBoardEntity));
+    }
+
+    private SpeechBoardEntity getSpeechBoardEntity(Long speechBoardId) {
+        return speechBoardRepository.findById(speechBoardId)
+                .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+    }
+
+    private SpeechBoardFeedbackResponse buildFeedbackResponseFromEntity(SpeechBoardFeedbackEntity feedbackEntity, SpeechBoardEntity speechBoardEntity) {
+        List<String> topics = topicRepository.findBySpeechBoardEntity(speechBoardEntity).stream()
+                .map(TopicEntity::getTopic)
+                .collect(Collectors.toList());
+
+        return SpeechBoardFeedbackResponse.builder()
+                .originalStt(feedbackEntity.getOriginalStt())
+                .conclusion(feedbackEntity.getConclusion())
+                .score(feedbackEntity.getScore())
+                .topics(topics)
+                .build();
+    }
+
+    private SpeechBoardFeedbackResponse createAndSaveFeedback(SpeechBoardEntity speechBoardEntity) {
+        SpeechBoardFeedbackRequest request = SpeechBoardFeedbackRequest.builder()
                 .record(speechBoardEntity.getRecord())
                 .atmosphere(speechBoardEntity.getAtmosphere())
                 .audience(speechBoardEntity.getAudience())
@@ -43,26 +69,30 @@ public class SpeechBoardFeedbackServiceImpl implements SpeechBoardFeedbackServic
                 .deadline(speechBoardEntity.getDeadline())
                 .build();
 
-        SpeechBoardFeedbackResponse speechBoardFeedbackResponse = flaskRequestUtils.requestSpeechBoardFeedback(speechBoardFeedbackRequest);
+        SpeechBoardFeedbackResponse response = flaskRequestUtils.requestSpeechBoardFeedback(request);
 
-        SpeechBoardFeedbackEntity speechBoardFeedbackEntity = SpeechBoardFeedbackEntity.builder()
+        SpeechBoardFeedbackEntity feedbackEntity = SpeechBoardFeedbackEntity.builder()
                 .speechBoardEntity(speechBoardEntity)
-                .originalStt(speechBoardFeedbackResponse.getOriginalStt())
-                .conclusion(speechBoardFeedbackResponse.getConclusion())
-                .score(speechBoardFeedbackResponse.getScore())
+                .originalStt(response.getOriginalStt())
+                .conclusion(response.getConclusion())
+                .score(response.getScore())
                 .build();
-        speechBoardFeedbackRepository.save(speechBoardFeedbackEntity);
+        speechBoardFeedbackRepository.save(feedbackEntity);
 
-        for (String topic : speechBoardFeedbackResponse.getTopics()) {
-            TopicEntity topicEntity = TopicEntity.builder()
-                    .speechBoardEntity(speechBoardEntity)
-                    .topic(topic)
-                    .build();
-            topicRepository.save(topicEntity);
-        }
+        saveTopics(response.getTopics(), speechBoardEntity);
 
-        return speechBoardFeedbackResponse;
+        return response;
     }
+
+    private void saveTopics(List<String> topics, SpeechBoardEntity speechBoardEntity) {
+        topics.stream()
+                .map(topic -> TopicEntity.builder()
+                        .speechBoardEntity(speechBoardEntity)
+                        .topic(topic)
+                        .build())
+                .forEach(topicRepository::save);
+    }
+
 
     @Override
     public SpeechBoardChangeTextResponse speechBoardChangeText(Long speechBoardId , SpeechBoardChangeTextRequest request){

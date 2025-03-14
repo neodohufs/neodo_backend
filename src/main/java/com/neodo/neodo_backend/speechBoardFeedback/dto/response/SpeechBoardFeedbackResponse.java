@@ -1,11 +1,17 @@
 package com.neodo.neodo_backend.speechBoardFeedback.dto.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SpeechBoardFeedbackResponse {
     private String originalStt;
     private int score;
