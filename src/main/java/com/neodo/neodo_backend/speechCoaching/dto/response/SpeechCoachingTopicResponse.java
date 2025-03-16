@@ -1,6 +1,7 @@
 package com.neodo.neodo_backend.speechCoaching.dto.response;
 
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.SpeechBoardEntity;
+import com.neodo.neodo_backend.speechCoaching.infrastructure.entity.SpeechCoachingEntity;
 import com.neodo.neodo_backend.topic.dto.response.TopicResponse;
 import com.neodo.neodo_backend.topic.infrastructure.entity.TopicEntity;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Getter
@@ -20,13 +22,18 @@ public class SpeechCoachingTopicResponse {
     private String title;
     private List<TopicResponse> topics;
 
-    public static SpeechCoachingTopicResponse from(SpeechBoardEntity speechBoard, List<TopicEntity> topics) {
+    public static SpeechCoachingTopicResponse from(SpeechBoardEntity speechBoard,
+                                                   List<TopicEntity> topics,
+                                                   Map<Long, SpeechCoachingEntity> coachingByTopicId) {
         return SpeechCoachingTopicResponse.builder()
                 .speechBoardId(speechBoard.getId())
                 .title(speechBoard.getTitle())
                 .topics(topics.stream()
-                        .map(TopicResponse::from)
-                        .collect(Collectors.toList()))
+                                .map(topic -> TopicResponse.from(
+                                        topic,
+                                        coachingByTopicId.getOrDefault(topic.getId(), null)))
+                                .collect(Collectors.toList()))
                 .build();
     }
+
 }
