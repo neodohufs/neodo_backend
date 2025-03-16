@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.neodo.neodo_backend.external.aws.config.S3Config.S3_BUCKET_URL;
@@ -88,15 +89,21 @@ public class SpeechCoachingServiceImpl implements SpeechCoachingService {
     public List<SpeechCoachingTopicResponse> get(UserEntity user) {
         List<SpeechBoardEntity> speechBoardEntities = speechBoardRepository.findByUserId(user.getId());
         List<TopicEntity> topicEntities = topicRepository.findBySpeechBoardEntityIn(speechBoardEntities);
+        List<SpeechCoachingEntity> speechCoachingEntities = speechCoachingRepository.findByTopicEntityIn(topicEntities);
 
-        Map<Long, List<TopicEntity>> topicsByBoardId = topicEntities.stream()
+        Map<Long, SpeechCoachingEntity> speechCoachingEntityByTopicId = speechCoachingEntities.stream()
+                .collect(Collectors.toMap(
+                        speechCoachingEntity -> speechCoachingEntity.getTopicEntity().getId(),
+                        Function.identity()));
+
+        Map<Long, List<TopicEntity>> topicsBySpeechBoardId = topicEntities.stream()
                 .collect(Collectors.groupingBy(topic -> topic.getSpeechBoardEntity().getId()));
 
         return speechBoardEntities.stream()
-                .map(speechBoard -> SpeechCoachingTopicResponse.from(
-                        speechBoard,
-                        topicsByBoardId.getOrDefault(speechBoard.getId(), Collections.emptyList()) // 해당 보드에 토픽이 없으면 빈 리스트 반환
-                ))
+                .map(speechBoardEntity -> SpeechCoachingTopicResponse.from(
+                        speechBoardEntity,
+                        topicsBySpeechBoardId.getOrDefault(speechBoardEntity.getId(), Collections.emptyList()),
+                        speechCoachingEntityByTopicId))
                 .collect(Collectors.toList());
     }
 
