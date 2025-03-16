@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedbackService {
@@ -25,13 +27,26 @@ public class SpeechCoachingFeedbackServiceImpl implements SpeechCoachingFeedback
     private final FlaskRequestUtils flaskRequestUtils;
 
     @Override
+    @Transactional
     public SpeechCoachingFeedbackResponse getFeedback(Long speechCoachingId) {
         SpeechCoachingEntity speechCoachingEntity = speechCoachingRepository.findById(speechCoachingId)
                 .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
+        Optional<SpeechCoachingFeedbackEntity> optionalSpeechCoachingFeedbackEntity =
+                speechCoachingFeedbackRepository.findBySpeechCoachingEntity_Id(speechCoachingEntity.getId());
+
+        if (optionalSpeechCoachingFeedbackEntity.isPresent()) {
+            SpeechCoachingFeedbackEntity speechFeedBackEntity = optionalSpeechCoachingFeedbackEntity.get();
+            return SpeechCoachingFeedbackResponse.builder()
+                    .conclusion(speechFeedBackEntity.getConclusion())
+                    .originalStt(speechFeedBackEntity.getOriginalStt())
+                    .score(speechFeedBackEntity.getScore())
+                    .build();
+        }
+
         SpeechCoachingFeedbackRequest speechCoachingFeedbackRequest = SpeechCoachingFeedbackRequest.builder()
-                .record(speechCoachingEntity.getRecord())
-                .build();
+                    .record(speechCoachingEntity.getRecord())
+                    .build();
 
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = flaskRequestUtils.requestSpeechCoachingFeedback(speechCoachingFeedbackRequest);
         SpeechCoachingFeedbackEntity speechCoachingFeedbackEntity = SpeechCoachingFeedbackEntity.builder()

@@ -18,7 +18,7 @@ public class SpeechCoachingFeedbackController {
 
     private final SpeechCoachingFeedbackService speechCoachingFeedbackService;
 
-    @PostMapping("/{speech-coaching-id}/feedback")
+    @GetMapping("/{speech-coaching-id}/feedback")
     public ResponseEntity<CommonResponse<SpeechCoachingFeedbackResponse>> getFeedback(@PathVariable("speech-coaching-id") Long speechCoachingId) {
         SpeechCoachingFeedbackResponse speechCoachingFeedbackResponse = speechCoachingFeedbackService.getFeedback(speechCoachingId);
         return ResponseEntity.ok()
