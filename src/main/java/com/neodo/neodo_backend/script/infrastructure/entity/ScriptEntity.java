@@ -7,10 +7,7 @@ import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Purpose;
 import com.neodo.neodo_backend.speechBoard.infrastructure.entity.enums.Scale;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -29,8 +26,10 @@ public class ScriptEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Setter
     private String title;
 
+    @Setter
     private String script;
 
     @Enumerated(EnumType.STRING)
@@ -63,4 +62,5 @@ public class ScriptEntity {
                 .createdAt(LocalDateTime.now())
                 .build();
     }
+
 }
