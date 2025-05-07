@@ -29,6 +29,7 @@ public class ScriptEntity {
     @Setter
     private String title;
 
+    @Setter
     private String script;
 
     @Enumerated(EnumType.STRING)
