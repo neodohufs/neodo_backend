@@ -11,4 +11,6 @@ public interface ScriptRepository {
     List<ScriptEntity> findByUserId(Long id);
 
     Optional<ScriptEntity> findById(Long scriptId);
+
+    void deleteById(Long scriptId);
 }

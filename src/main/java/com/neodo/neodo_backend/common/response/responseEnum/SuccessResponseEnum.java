@@ -9,8 +9,9 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum SuccessResponseEnum implements Response {
     READ_USER_INFO(HttpStatus.OK, "User Info Is Loaded Successfully"),
-    RESOURCES_CREATED(HttpStatus.CREATED, "Resourses created Successfully"),
+    RESOURCES_CREATED(HttpStatus.CREATED, "Resourses are created Successfully"),
     RESOURCES_GET(HttpStatus.OK, "Resourses is got Successfully"),
+    RESOURCES_DELETED(HttpStatus.OK, "Resourses are deleted Successfully"),
 
     TITLE_CHANGED(HttpStatus.OK, "Title is changed Succusfully"),
     TEXT_CHANGED(HttpStatus.OK, "Text is changed Successfully");

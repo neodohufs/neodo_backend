@@ -20,4 +20,6 @@ public interface ScriptService {
     ScriptResponse patchTitle(Long scriptId, ScriptTitlePatchRequest scriptTitlePatchRequest);
 
     ScriptResponse patchText(Long scriptId, ScriptTextPatchRequest scriptTextPatchRequest);
+
+    ScriptResponse delete(Long scriptId);
 }

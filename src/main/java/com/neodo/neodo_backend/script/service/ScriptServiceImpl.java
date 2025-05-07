@@ -12,6 +12,7 @@ import com.neodo.neodo_backend.script.dto.response.ScriptResponse;
 import com.neodo.neodo_backend.script.service.port.ScriptRepository;
 import com.neodo.neodo_backend.script.infrastructure.entity.ScriptEntity;
 import com.neodo.neodo_backend.users.infrastructure.entity.UserEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ScriptServiceImpl implements ScriptService {
 
     private final ScriptRepository scriptRepository;
@@ -62,7 +64,17 @@ public class ScriptServiceImpl implements ScriptService {
         ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
                 .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
-        scriptEntity.setTitle(scriptTextPatchRequest.getScript());
+        scriptEntity.setScript(scriptTextPatchRequest.getScript());
+
+        return ScriptResponse.from(scriptEntity);
+    }
+
+    @Override
+    public ScriptResponse delete(Long scriptId) {
+        ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+
+        scriptRepository.deleteById(scriptId);
 
         return ScriptResponse.from(scriptEntity);
     }

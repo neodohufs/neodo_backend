@@ -27,4 +27,9 @@ public class ScriptRepositoryImpl implements ScriptRepository {
     public Optional<ScriptEntity> findById(Long scriptId) {
         return scriptJpaRepository.findById(scriptId);
     }
+
+    @Override
+    public void deleteById(Long scriptId) {
+        scriptJpaRepository.deleteById(scriptId);
+    }
 }
