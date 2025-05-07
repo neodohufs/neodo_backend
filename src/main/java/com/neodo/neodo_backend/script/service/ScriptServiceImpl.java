@@ -4,6 +4,7 @@ import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
 import com.neodo.neodo_backend.script.controller.port.ScriptService;
 import com.neodo.neodo_backend.script.dto.request.ScriptCreateRequest;
+import com.neodo.neodo_backend.script.dto.request.ScriptTitlePatchRequest;
 import com.neodo.neodo_backend.script.dto.response.ScriptCreateResponse;
 import com.neodo.neodo_backend.script.dto.response.ScriptListResponse;
 import com.neodo.neodo_backend.script.dto.response.ScriptResponse;
@@ -43,4 +44,15 @@ public class ScriptServiceImpl implements ScriptService {
                 .map(ScriptResponse::from)
                 .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
     }
+
+    @Override
+    public ScriptResponse patchTitle(Long scriptId, ScriptTitlePatchRequest scriptTitlePatchRequest) {
+        ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+
+        scriptEntity.setTitle(scriptTitlePatchRequest.getTitle());
+
+        return ScriptResponse.from(scriptEntity);
+    }
+
 }
