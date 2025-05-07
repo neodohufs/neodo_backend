@@ -4,6 +4,7 @@ import com.neodo.neodo_backend.common.response.responseEnum.ErrorResponseEnum;
 import com.neodo.neodo_backend.exception.impl.ResourceException;
 import com.neodo.neodo_backend.script.controller.port.ScriptService;
 import com.neodo.neodo_backend.script.dto.request.ScriptCreateRequest;
+import com.neodo.neodo_backend.script.dto.request.ScriptTextPatchRequest;
 import com.neodo.neodo_backend.script.dto.request.ScriptTitlePatchRequest;
 import com.neodo.neodo_backend.script.dto.response.ScriptCreateResponse;
 import com.neodo.neodo_backend.script.dto.response.ScriptListResponse;
@@ -47,10 +48,21 @@ public class ScriptServiceImpl implements ScriptService {
 
     @Override
     public ScriptResponse patchTitle(Long scriptId, ScriptTitlePatchRequest scriptTitlePatchRequest) {
+        // TODO: 다른 api도 마찬가지로 본인이 작성한 것에 한해서만 수정할 수 있도록 리팩터링 해야 함.
         ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
                 .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
         scriptEntity.setTitle(scriptTitlePatchRequest.getTitle());
+
+        return ScriptResponse.from(scriptEntity);
+    }
+
+    @Override
+    public ScriptResponse patchText(Long scriptId, ScriptTextPatchRequest scriptTextPatchRequest) {
+        ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
+                .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+
+        scriptEntity.setTitle(scriptTextPatchRequest.getScript());
 
         return ScriptResponse.from(scriptEntity);
     }
