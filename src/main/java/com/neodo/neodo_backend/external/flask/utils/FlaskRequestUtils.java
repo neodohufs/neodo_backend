@@ -1,6 +1,8 @@
 package com.neodo.neodo_backend.external.flask.utils;
 
 import com.neodo.neodo_backend.exception.impl.ExternalServiceException;
+import com.neodo.neodo_backend.scriptFeedback.dto.request.ScriptFeedbackRequest;
+import com.neodo.neodo_backend.scriptFeedback.dto.response.ScriptFeedbackResponse;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
 import com.neodo.neodo_backend.speechBoardFeedback.dto.response.SpeechBoardFeedbackResponse;
 import com.neodo.neodo_backend.speechCoachingFeedback.dto.reponse.SpeechCoachingFeedbackResponse;
@@ -60,6 +62,31 @@ public class FlaskRequestUtils {
                     HttpMethod.POST,
                     requestEntity,
                     SpeechCoachingFeedbackResponse.class
+            );
+
+            if (responseEntity.getBody() == null) throw new ExternalServiceException(RESPONSE_NOT_VALID);
+
+            return responseEntity.getBody();
+
+        } catch (Exception e) {
+            throw new ExternalServiceException(EXTERNAL_SERVICE_ERROR);
+        }
+    }
+
+    public ScriptFeedbackResponse requestScriptFeedback(ScriptFeedbackRequest scriptFeedbackRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<ScriptFeedbackRequest> requestEntity = new HttpEntity<>(scriptFeedbackRequest, headers);
+
+        try {
+            ResponseEntity<ScriptFeedbackResponse> responseEntity = restTemplate.exchange(
+                    UriComponentsBuilder.fromHttpUrl(flaskServerUrl)
+                            .path("script") // TODO: AI 팀에서 받아온 후 수정 필요
+                            .toUriString(),
+                    HttpMethod.POST,
+                    requestEntity,
+                    ScriptFeedbackResponse.class
             );
 
             if (responseEntity.getBody() == null) throw new ExternalServiceException(RESPONSE_NOT_VALID);

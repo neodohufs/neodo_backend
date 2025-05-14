@@ -64,6 +64,7 @@ public class ScriptServiceImpl implements ScriptService {
         ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
                 .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
+        // TODO: 스크립트 원본 남겨두어야 함.
         scriptEntity.setScript(scriptTextPatchRequest.getScript());
 
         return ScriptResponse.from(scriptEntity);
