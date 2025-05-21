@@ -29,8 +29,10 @@ public class ScriptEntity {
     @Setter
     private String title;
 
-    @Setter
     private String script;
+
+    @Setter
+    private String editedScript;
 
     @Enumerated(EnumType.STRING)
     private Atmosphere atmosphere;

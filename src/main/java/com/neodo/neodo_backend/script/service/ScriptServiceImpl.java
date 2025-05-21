@@ -42,7 +42,6 @@ public class ScriptServiceImpl implements ScriptService {
 
     @Override
     public ScriptResponse get(Long scriptId) {
-        // TODO: 피드백 정보도 가져와야 함
         return scriptRepository.findById(scriptId)
                 .map(ScriptResponse::from)
                 .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
@@ -64,7 +63,7 @@ public class ScriptServiceImpl implements ScriptService {
         ScriptEntity scriptEntity = scriptRepository.findById(scriptId)
                 .orElseThrow(()-> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
 
-        scriptEntity.setScript(scriptTextPatchRequest.getScript());
+        scriptEntity.setEditedScript(scriptTextPatchRequest.getScript());
 
         return ScriptResponse.from(scriptEntity);
     }
