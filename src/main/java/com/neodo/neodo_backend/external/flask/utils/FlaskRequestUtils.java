@@ -82,7 +82,7 @@ public class FlaskRequestUtils {
         try {
             ResponseEntity<ScriptFeedbackResponse> responseEntity = restTemplate.exchange(
                     UriComponentsBuilder.fromHttpUrl(flaskServerUrl)
-                            .path("script") // TODO: AI 팀에서 받아온 후 수정 필요
+                            .path("script")
                             .toUriString(),
                     HttpMethod.POST,
                     requestEntity,

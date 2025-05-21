@@ -2,10 +2,7 @@ package com.neodo.neodo_backend.scriptFeedback.infrastructure.entity;
 
 import com.neodo.neodo_backend.script.infrastructure.entity.ScriptEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "script_feedbacks")
@@ -22,6 +19,7 @@ public class ScriptFeedbackEntity {
     private ScriptEntity scriptEntity;
 
     @Lob
+    @Setter
     private String feedback;
 
     @Builder

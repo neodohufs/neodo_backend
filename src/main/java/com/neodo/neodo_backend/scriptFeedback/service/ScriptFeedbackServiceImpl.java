@@ -10,13 +10,13 @@ import com.neodo.neodo_backend.scriptFeedback.dto.request.ScriptFeedbackRequest;
 import com.neodo.neodo_backend.scriptFeedback.dto.response.ScriptFeedbackResponse;
 import com.neodo.neodo_backend.scriptFeedback.infrastructure.entity.ScriptFeedbackEntity;
 import com.neodo.neodo_backend.scriptFeedback.service.port.ScriptFeedbackRepository;
-import com.neodo.neodo_backend.speechBoardFeedback.dto.request.SpeechBoardFeedbackRequest;
-import com.neodo.neodo_backend.speechBoardFeedback.infrastructure.entity.SpeechBoardFeedbackEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ScriptFeedbackServiceImpl implements ScriptFeedbackService {
 
     private final FlaskRequestUtils flaskRequestUtils;
@@ -29,7 +29,15 @@ public class ScriptFeedbackServiceImpl implements ScriptFeedbackService {
 
         return scriptFeedbackRepository.findByScriptEntity_Id(scriptEntity.getId())
                 .map(this::buildFeedbackResponseFromEntity)
-                .orElseGet(() -> createAndSaveFeedback(scriptEntity));
+                .orElseGet(() -> getFeedbackFromFlask(scriptEntity));
+    }
+
+    @Override
+    public ScriptFeedbackResponse getEditFeedback(Long scriptId) {
+        ScriptEntity scriptEntity = getScriptEntity(scriptId);
+        ScriptFeedbackEntity scriptFeedbackEntity = scriptFeedbackRepository.findByScriptEntity_Id(scriptEntity.getId())
+                .orElseThrow(() -> new ResourceException(ErrorResponseEnum.RESOURCE_NOT_FOUND));
+        return getEditedFeedbackFromFlask(scriptEntity, scriptFeedbackEntity);
     }
 
     private ScriptEntity getScriptEntity(Long scriptId) {
@@ -43,19 +51,35 @@ public class ScriptFeedbackServiceImpl implements ScriptFeedbackService {
                 .build();
     }
 
-    private ScriptFeedbackResponse createAndSaveFeedback(ScriptEntity scriptEntity) {
+    private ScriptFeedbackResponse getFeedbackFromFlask(ScriptEntity scriptEntity) {
         ScriptFeedbackRequest request = ScriptFeedbackRequest.builder()
                 .script(scriptEntity.getScript())
                 .build();
 
         ScriptFeedbackResponse scriptFeedbackResponse = flaskRequestUtils.requestScriptFeedback(request);
 
+        saveFeedback(scriptEntity, scriptFeedbackResponse);
+
+        return scriptFeedbackResponse;
+    }
+
+    private void saveFeedback(ScriptEntity scriptEntity, ScriptFeedbackResponse scriptFeedbackResponse) {
         ScriptFeedbackEntity feedbackEntity = ScriptFeedbackEntity.builder()
                 .scriptEntity(scriptEntity)
                 .feedback(scriptFeedbackResponse.getFeedback())
                 .build();
 
         scriptFeedbackRepository.save(feedbackEntity);
+    }
+
+    private ScriptFeedbackResponse getEditedFeedbackFromFlask(ScriptEntity scriptEntity, ScriptFeedbackEntity scriptFeedbackEntity) {
+        ScriptFeedbackRequest request = ScriptFeedbackRequest.builder()
+                .script(scriptEntity.getEditedScript())
+                .build();
+
+        ScriptFeedbackResponse scriptFeedbackResponse = flaskRequestUtils.requestScriptFeedback(request);
+
+        scriptFeedbackEntity.setFeedback(scriptFeedbackResponse.getFeedback());
 
         return scriptFeedbackResponse;
     }

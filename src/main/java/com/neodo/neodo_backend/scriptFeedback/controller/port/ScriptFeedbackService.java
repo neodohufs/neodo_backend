@@ -4,4 +4,6 @@ import com.neodo.neodo_backend.scriptFeedback.dto.response.ScriptFeedbackRespons
 
 public interface ScriptFeedbackService {
     ScriptFeedbackResponse getFeedback(Long scriptId);
+
+    ScriptFeedbackResponse getEditFeedback(Long scriptId);
 }

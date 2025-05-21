@@ -28,4 +28,15 @@ public class ScriptFeedbackController {
                         .data(scriptFeedbackResponse)
                         .build());
     }
+
+    @GetMapping("/{script-id}/edit-feedback")
+    public ResponseEntity<CommonResponse<ScriptFeedbackResponse>> getEditFeedback(@PathVariable("script-id") Long scriptId) {
+        ScriptFeedbackResponse scriptFeedbackResponse = scriptFeedbackService.getEditFeedback(scriptId);
+
+        return ResponseEntity.ok()
+                .body(CommonResponse.<ScriptFeedbackResponse>builder()
+                        .response(SuccessResponseEnum.RESOURCES_GET)
+                        .data(scriptFeedbackResponse)
+                        .build());
+    }
 }
