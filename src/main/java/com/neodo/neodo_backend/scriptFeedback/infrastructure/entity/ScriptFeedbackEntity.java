@@ -20,6 +20,7 @@ public class ScriptFeedbackEntity {
 
     @Lob
     @Setter
+    @Column(columnDefinition = "TEXT")
     private String feedback;
 
     @Builder

@@ -29,9 +29,13 @@ public class ScriptEntity {
     @Setter
     private String title;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String script;
 
     @Setter
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String editedScript;
 
     @Enumerated(EnumType.STRING)
