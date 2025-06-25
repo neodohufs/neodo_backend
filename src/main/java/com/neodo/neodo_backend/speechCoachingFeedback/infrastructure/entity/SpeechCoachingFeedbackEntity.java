@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "speech_coaching_feedbacks")
@@ -24,6 +25,7 @@ public class SpeechCoachingFeedbackEntity {
 
     @Lob
     @Column(columnDefinition = "TEXT")
+    @Setter
     private String modifiedStt;
 
     private int score;
@@ -31,10 +33,6 @@ public class SpeechCoachingFeedbackEntity {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String conclusion;
-
-    public void setModifiedStt(String modifiedStt) {
-        this.modifiedStt = modifiedStt;
-    }
 
     @Builder
     public SpeechCoachingFeedbackEntity(SpeechCoachingEntity speechCoachingEntity, String originalStt, String modifiedStt, int score, String conclusion) {

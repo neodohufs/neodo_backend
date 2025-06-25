@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ public class SpeechBoardEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    @Setter
     private String title;
 
     private String record;
@@ -45,10 +47,6 @@ public class SpeechBoardEntity {
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Builder
     public SpeechBoardEntity(UserEntity userEntity, String fileName, String record, RecordRequestDto recordRequestDto) {

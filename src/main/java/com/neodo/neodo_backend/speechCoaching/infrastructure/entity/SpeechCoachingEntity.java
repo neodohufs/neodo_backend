@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -22,14 +23,11 @@ public class SpeechCoachingEntity {
 
     private String record;
 
+    @Setter
     private String title;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     @Builder
     public SpeechCoachingEntity(String title, String record, TopicEntity topicEntity) {
