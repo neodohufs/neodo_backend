@@ -1,13 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:${PORT_NUMBER}/${DATABASE_NAME}
+    url: jdbc:mysql://${RDS_HOSTNAME}:${PORT_NUMBER}/${DATABASE_NAME}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-
   jpa:
-    hibernate:
-      ddl-auto: create # ?? ddl-auto ?? ??? ?? ??
     properties:
       hibernate:
         show_sql: true
@@ -30,7 +27,8 @@ jwt:
 aws:
   s3:
     bucket: neodo-backends3bucket
-    access-key: ${ACCESS-KEY}
-    secret-key: ${SECRET-KEY}
+    access-key: ${ACCESS_KEY}
+    secret-key: ${SECRET_KEY}
     region: ap-northeast-2
+
 
