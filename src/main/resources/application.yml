@@ -7,6 +7,7 @@ spring:
   jpa:
     properties:
       hibernate:
+        ddl-auto: create
         show_sql: true
         format_sql: true
         use_sql_comments: true
@@ -15,6 +16,10 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+  flyway:
+    enabled: true
+    locations: classpath:/db/migration
+    baseline-on-migrate: true
 flask:
   server:
     url: ${FLASK_SERVER_URL}
