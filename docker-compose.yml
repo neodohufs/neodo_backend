@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  spring-app:
+    image: openjdk:17-jdk
+    container_name: neodo-spring
+    working_dir: /app
+    volumes:
+      - ./build/libs:/app
+    command: ["java", "-jar", "neodo_backend-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://${RDS_HOSTNAME}:${PORT_NUMBER}/${DATABASE_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      FLASK_SERVER_URL: ${FLASK_SERVER_URL}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      AWS_SECRET_KEY: ${SECRET_KEY}
+      AWS_ACCESS_KEY: ${ACCESS_KEY}
+    restart: unless-stopped
