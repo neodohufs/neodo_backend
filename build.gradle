@@ -36,7 +36,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // migration
-    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-core:9.22.3'
 
     // jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
