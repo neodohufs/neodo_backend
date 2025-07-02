@@ -1,44 +1,10 @@
-version: "3.8"
-services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: ${DATABASE_NAME}
-      MYSQL_USER: ${DATASOURCE_USERNAME}
-      MYSQL_PASSWORD: ${DATASOURCE_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - mynet
+version: '3.8'
 
-  spring:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: spring
-    depends_on:
-      - mysql
+services:
+  app:
+    build: .
+    container_name: neodo_backend
     ports:
       - "8080:8080"
-    networks:
-      - mynet
-    environment:
-      PORT_NUMBER: ${PORT_NUMBER}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
-      DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
-      FLASK_SERVER_URL: ${FLASK_SERVER_URL}
-      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
-      ACCESS_KEY: ${ACCESS_KEY}
-      SECRET_KEY: ${SECRET_KEY}
-
-volumes:
-  mysql-data:
-
-networks:
-  mynet:
+    env_file:
+      - ./.env
