@@ -2,7 +2,7 @@ FROM gradle:8.8.0-jdk17-alpine AS builder
 
 WORKDIR /build
 
-COPY build.gradle.kts settings.gradle.kts ./
+COPY build.gradle settings.gradle ./
 COPY src ./src
 
 RUN gradle bootJar --no-daemon
