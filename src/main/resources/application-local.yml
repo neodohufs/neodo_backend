@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/${DATABASE_NAME}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create # ?? ddl-auto ?? ??? ?? ??
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+flask:
+  server:
+    url: ${FLASK_SERVER_URL}
+
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
+
+
+aws:
+  s3:
+    bucket: neodo-backends3bucket
+    access-key: ${ACCESS-KEY}
+    secret-key: ${SECRET-KEY}
+    region: ap-northeast-2
+
